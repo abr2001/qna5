@@ -43,6 +43,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'ffaker'
+  gem 'rails-controller-testing'
 end
 
 group :development do
