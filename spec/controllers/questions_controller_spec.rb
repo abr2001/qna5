@@ -36,9 +36,9 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
-      it 'redirects to index view' do
+      it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
-        expect(response).to redirect_to questions_path
+        expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
@@ -54,5 +54,12 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'GET #show' do
+    before { get :show, params: { id: question } }
+
+    it 'assings the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+  end
 
 end
