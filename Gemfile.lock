@@ -240,6 +240,7 @@ DEPENDENCIES
   ffaker
   haml
   haml-rails
+  html2haml
   jbuilder (~> 2.5)
   jquery-rails
   launchy
