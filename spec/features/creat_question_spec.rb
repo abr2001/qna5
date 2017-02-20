@@ -8,7 +8,8 @@ feature 'Create question', %q{
 
   scenario 'User create the question' do
 
-    visit new_question_path
+    visit questions_path
+    click_on 'Add question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Text', with: 'text text text'
     click_on 'Create'
