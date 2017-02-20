@@ -2,7 +2,18 @@
 
 %b= @question.title
 
-%p=@question.body
+%p=@question.body.html_safe
+
+Count of questions:
+= @question.answers.count
+
+- @question.answers.each_with_index do |answer, index|
+  .panel.panel-primary
+    .panel-heading= "question #{index + 1}"
+    .panel-body
+      = answer.body.html_safe
+
+
 
 = form_for @answer, url: question_answers_path(@question) do |f|
   = f.label :body, 'Answer'
