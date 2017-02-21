@@ -7,14 +7,16 @@ feature 'delete answer for question', %q{
 } do
 
   let!(:question) { create(:question) }
-  let!(:answer) { Answer.create(body: 'my answer for question', question: question) }
+  let!(:user) { create(:user) }
+  let!(:answer) { create(:answer, user: user, body: 'my answer for question', question: question) }
 
-  scenario 'User view the answers' do
-    login_user
+  scenario 'User delete the own answers' do
+    visit new_user_session_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_on 'Log in'
     visit question_path(question.id)
     click_on 'Delete'
-    save_and_open_page
-
-    expect(page).to have_content 'my answer for question'
+    expect(page).to have_content 'Your answer successfully deleted'
   end
 end

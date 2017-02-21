@@ -6,7 +6,7 @@ feature 'view answers for question', %q{
 } do
 
   let!(:question) { create(:question) }
-  let!(:answer) { Answer.create(body: 'my answer for question', question: question) }
+  let!(:answer) { create(:answer, :with_user, body: 'my answer for question', question: question) }
 
   scenario 'User view the answers' do
     visit question_path(question.id)
