@@ -7,7 +7,7 @@ feature 'Create question', %q{
 } do
 
   scenario 'User create the question' do
-
+    login_user
     visit questions_path
     click_on 'Add question'
     fill_in 'Title', with: 'Test question'

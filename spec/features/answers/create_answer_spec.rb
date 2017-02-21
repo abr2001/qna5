@@ -7,6 +7,7 @@ feature 'Create answer', %q{
 
   let(:question) { create(:question) }
   scenario 'User create the answer' do
+    login_user
     visit question_path(question.id)
 
     fill_in 'Answer', with: 'text text text'

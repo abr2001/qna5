@@ -6,22 +6,14 @@ feature 'Siging in', %q{
   I want be able to sign in
  } do
 
-  let(:user) { create(:user) }
 
   scenario "Existing user try to sign in" do
-    visit new_user_session_path
-    save_and_open_page
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+    login_user
     expect(page).to have_content 'Signed in successfully.'
   end
 
   scenario "Authenticated user try to sign out" do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+    login_user
     click_on 'Log out'
     expect(page).to have_content 'Signed out successfully.'
   end

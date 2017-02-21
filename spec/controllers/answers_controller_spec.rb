@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
 
   let(:question) { create(:question) }
+  login_user
 
   describe 'GET #new' do
     before { get :new, params: { question_id: question } }
