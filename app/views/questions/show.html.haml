@@ -12,6 +12,7 @@ Count of questions:
     .panel-heading= "question #{index + 1}"
     .panel-body
       = answer.body.html_safe
+      = link_to 'Delete', question_answer_path(@question), method: :delete, confirm: 'Are you sure?'
 
 
 

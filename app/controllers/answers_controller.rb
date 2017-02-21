@@ -15,6 +15,10 @@ class AnswersController < ApplicationController
     end
   end
 
+  def destroy
+    redirect_to ''
+  end
+
   private
 
   def answer_params
