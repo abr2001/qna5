@@ -4,6 +4,9 @@
 
 %p=@question.body.html_safe
 
+- if current_user = @question.user
+  = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+
 Count of questions:
 = @question.answers.count
 
