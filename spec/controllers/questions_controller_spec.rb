@@ -55,6 +55,29 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'DELETE #destroy' do
+    before { question }
+    context 'autor delete question' do
+      it 'delete question in the database' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'not autor delete question' do
+      let(:question_2) { create(:question) }
+      before { question_2 }
+      it 'delete question in the database' do
+        expect { delete :destroy, params: { id: question_2 } }.to_not change(Question, :count)
+      end
+    end
+  end
+
+
   describe 'GET #show' do
     before { get :show, params: { id: question } }
 
