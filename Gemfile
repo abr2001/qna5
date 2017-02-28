@@ -36,9 +36,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'html2haml'
 gem 'bootstrap-sass', '~> 3.3.5'
-gem 'devise'
 
 group :test do
   gem 'rspec-rails'
@@ -48,7 +46,6 @@ group :test do
   gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
-  gem 'launchy'
 end
 
 group :development do

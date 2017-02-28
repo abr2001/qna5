@@ -1,5 +1,4 @@
 class Answer < ApplicationRecord
   belongs_to :question
-  belongs_to :user
-  validates :body, :user, presence: true
+  validates :body, presence: true
 end
