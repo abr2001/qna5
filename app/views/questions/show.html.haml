@@ -1,22 +1,27 @@
-%b= @question.title
+.well
+  %b= @question.title
 
-%p=@question.body.html_safe
+  %p=@question.body.html_safe
 
-- if current_user = @question.user
+- if user_signed_in? && current_user.author_of?(@question)
   = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
 
-Count of questions:
+Count of answers:
 = @question.answers.count
 
 - @question.answers.each_with_index do |answer, index|
   .panel.panel-primary
-    .panel-heading= "question #{index + 1}"
+    .panel-heading= "answer #{index + 1}"
     .panel-body
       = answer.body.html_safe
-      - if current_user == answer.user
-        = link_to 'Delete', question_answer_path(@question), method: :delete, data: { confirm: 'Are you sure?' }
+      - if user_signed_in? && current_user.author_of?(answer)
+        = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
 
-= form_for @answer, url: question_answers_path(@question) do |f|
+
+- @answer.errors.full_messages.each do |error|
+  .alert.alert-danger= error
+
+= form_for [@question, @answer] do |f|
   = f.label :body, 'Answer'
   = f.text_field :body
   = f.submit 'Create answer'
