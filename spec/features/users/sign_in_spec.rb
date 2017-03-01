@@ -6,16 +6,11 @@ feature 'Siging in', %q{
   I want be able to sign in
  } do
 
+  let!(:user) { create(:user) }
 
   scenario "Existing user try to sign in" do
     login_user
     expect(page).to have_content 'Signed in successfully.'
-  end
-
-  scenario "Authenticated user try to sign out" do
-    login_user
-    click_on 'Log out'
-    expect(page).to have_content 'Signed out successfully.'
   end
 
   scenario 'Non-existing user try to sign in' do

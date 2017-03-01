@@ -7,7 +7,7 @@ feature 'View questions', %q{
 } do
 
   scenario 'User view the list of questions' do
-    create(:question, title: 'new question')
+    create_list(:question, 5, title: 'new question')
     visit questions_path
 
     expect(page).to have_content 'new question'

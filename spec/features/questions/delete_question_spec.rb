@@ -10,12 +10,22 @@ feature 'delete question', %q{
   let!(:question) { create(:question, user: user) }
 
   scenario 'User delete the own question' do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+    login_user
     visit question_path(question.id)
     click_on 'Delete question'
     expect(page).to have_content 'Your question successfully deleted'
   end
+
+  scenario 'a non-authenticated user tries delete own question' do
+    visit question_path(question.id)
+    expect(page).to_not have_content 'Delete question'
+  end
+
+  let!(:another_user) { create(:user) }
+  scenario "The user tries to delete someone else's question" do
+    login_another_user
+    visit question_path(question.id)
+    expect(page).to_not have_content 'Delete question'
+  end
+
 end
