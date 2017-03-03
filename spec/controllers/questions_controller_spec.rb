@@ -37,6 +37,11 @@ RSpec.describe QuestionsController, type: :controller do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
+      it 'question belongs to user' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(Question.last.user).to eq(@user)
+      end
+
       it 'redirects to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to question_path(assigns(:question))
@@ -69,10 +74,15 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'not autor delete question' do
-      let(:question_2) { create(:question) }
+      let!(:question_2) { create(:question) }
       before { question_2 }
       it 'delete question in the database' do
         expect { delete :destroy, params: { id: question_2 } }.to_not change(Question, :count)
+      end
+
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
       end
     end
   end

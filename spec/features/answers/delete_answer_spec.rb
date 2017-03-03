@@ -10,13 +10,24 @@ feature 'delete answer for question', %q{
   let!(:user) { create(:user) }
   let!(:answer) { create(:answer, user: user, body: 'my answer for question', question: question) }
 
-  scenario 'User delete the own answers' do
-    visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_on 'Log in'
+  scenario 'The user deletes their answer' do
+    login_user
     visit question_path(question.id)
     click_on 'Delete'
     expect(page).to have_content 'Your answer successfully deleted'
+    expect(page).to_not have_content 'my answer for question'
   end
+
+  scenario 'a non-authenticated user tries delete own answer' do
+    visit question_path(question.id)
+    expect(page).to_not have_content 'Delete'
+  end
+
+  let!(:another_user) { create(:user) }
+  scenario "The user tries to delete someone else's answer" do
+    login_another_user
+    visit question_path(question.id)
+    expect(page).to_not have_content 'Delete'
+  end
+
 end
