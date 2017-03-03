@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = Answer.new(answer_params)
-    @question = Question.find params[:question_id]
+    @question = Question.find(params[:question_id])
     @answer.question = @question
     @answer.user = current_user
     if @answer.save
@@ -14,7 +14,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer = Answer.find params[:id]
+    @answer = Answer.find(params[:id])
     if current_user.author_of?(@answer)
       @answer.destroy
       notice = 'Your answer successfully deleted'

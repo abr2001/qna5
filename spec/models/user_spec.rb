@@ -6,27 +6,14 @@ RSpec.describe User, type: :model do
 
   let!(:user) { create :user }
   let!(:question) { create :question, user: user }
-  let!(:answer) { create :answer, question: question, user: user}
 
-  describe 'the user is the author' do
-    it 'of the question' do
-      expect(user.author_of?(question)).to eq(true)
-    end
-
-    it 'of the answer' do
-      expect(user.author_of?(answer)).to eq(true)
-    end
+  it 'the user is the author of the question' do
+    expect(user).to be_author_of(question)
   end
 
   let!(:user_not_author) { create :user }
-  describe 'the user is not the author' do
-    it 'of the question' do
-      expect(user_not_author.author_of?(question)).to eq(false)
-    end
-
-    it 'of the answer' do
-      expect(user_not_author.author_of?(answer)).to eq(false)
-    end
+  it 'the user is not the author of the question' do
+    expect(user_not_author).to_not be_author_of(question)
   end
 
 end
