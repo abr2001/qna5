@@ -1,0 +1,8 @@
+.answer{id: "#{answer.id}"}
+  .panel.panel-primary
+    .panel-heading= "answer #{index + 1}"
+    .panel-body
+      = answer.body.html_safe
+      - if user_signed_in? && current_user.author_of?(answer)
+        = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
+

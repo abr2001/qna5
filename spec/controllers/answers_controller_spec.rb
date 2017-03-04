@@ -8,17 +8,17 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }.to change(question.answers, :count).by(1)
+        expect { post :create, format: :js, params: { answer: attributes_for(:answer), question_id: question } }.to change(question.answers, :count).by(1)
       end
       it 'the answer belongs to user' do
-        post :create, params: { answer: attributes_for(:answer), question_id: question }
+        post :create, format: :js, params: { answer: attributes_for(:answer), question_id: question }
         expect(Answer.last.user).to eq(@user)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
-        expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: question } }.to_not change(Answer, :count)
+        expect { post :create, format: :js, params: { answer: attributes_for(:invalid_answer), question_id: question } }.to_not change(Answer, :count)
       end
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to question show' do
         delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to question_path
+        expect(response).to redirect_to question_path(question)
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirect to question show' do
         delete :destroy, params: { id: answer2, question_id: question }
-        expect(response).to redirect_to question_path
+        expect(response).to redirect_to question_path(question)
       end
     end
   end

@@ -9,19 +9,14 @@
 Count of answers:
 = @question.answers.count
 
-- @question.answers.each_with_index do |answer, index|
-  .panel.panel-primary
-    .panel-heading= "answer #{index + 1}"
-    .panel-body
-      = answer.body.html_safe
-      - if user_signed_in? && current_user.author_of?(answer)
-        = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
-
+.answers
+  - @question.answers.each_with_index do |answer, index|
+    = render 'answer', answer: answer, index: index
 
 - @answer.errors.full_messages.each do |error|
   .alert.alert-danger= error
 
-= form_for [@question, @answer] do |f|
+= form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Answer'
   = f.text_field :body
   = f.submit 'Create answer'
