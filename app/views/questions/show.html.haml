@@ -11,10 +11,7 @@ Count of answers:
 
 .answers
   - @question.answers.each_with_index do |answer, index|
-    = render 'answer', answer: answer, index: index
-
-- @answer.errors.full_messages.each do |error|
-  .alert.alert-danger= error
+    = render 'questions/answer', answer: answer, index: index
 
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Answer'

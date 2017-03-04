@@ -1,3 +1,10 @@
-$('.answers').append("<%= j render 'questions/answer', answer: @answer, index: @question.answers.count %>");
+$('.errors').html('');
+
+<% if @answer.valid? %>
+  $('.answers').append("<%= j render 'questions/answer', answer: @answer, index: @question.answers.count, formats: [:html] %>");
+<%else%>
+  $('.answers').append("<%= j render 'shared/error_message', item: @answer %>");
+<%end%>
+
 $('#answer_body').val('');
 

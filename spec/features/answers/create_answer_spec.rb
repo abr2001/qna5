@@ -8,24 +8,29 @@ feature 'Create answer', %q{
   let(:question) { create(:question) }
   let!(:user) { create(:user) }
 
-  scenario 'User create the answer' do
+  scenario 'User create the answer', js: true do
     login_user
     visit question_path(question.id)
 
     fill_in 'Answer', with: 'text text text'
     click_on 'Create'
+    expect(current_path).to eq question_path(question)
+    within('.answers') do
+      expect(page).to have_content 'text text text'
+    end
 
-    expect(page).to have_content 'Your answer successfully created'
-    expect(page).to have_content 'text text text'
   end
 
-  scenario 'user enters invalid data' do
+  scenario 'user enters invalid data', js: true do
     login_user
     visit question_path(question.id)
 
     fill_in 'Answer', with: ''
     click_on 'Create'
-    expect(page).to have_content "Body can't be blank"
+    expect(current_path).to eq question_path(question)
+    within('.answers') do
+      expect(page).to have_content "Body can't be blank"
+    end
   end
 
   scenario 'a non-authenticated user tries to answer' do
