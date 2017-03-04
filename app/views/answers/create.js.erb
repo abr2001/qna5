@@ -1,7 +1,7 @@
 $('.errors').html('');
 
 <% if @answer.valid? %>
-  $('.answers').append("<%= j render 'questions/answer', answer: @answer, index: @question.answers.count, formats: [:html] %>");
+  $('.answers').append("<%= j render 'questions/answer', answer: @answer, index: @question.answers.count - 1, formats: [:html] %>");
 <%else%>
   $('.answers').append("<%= j render 'shared/error_message', item: @answer %>");
 <%end%>
