@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'View questions', %q{
   In order to get list questions

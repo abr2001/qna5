@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'Siging up', %q{
   In order to be able ask questions
