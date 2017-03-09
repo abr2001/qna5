@@ -49,6 +49,8 @@ group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
 group :development do
