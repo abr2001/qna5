@@ -15,7 +15,7 @@ Count of answers:
 
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Answer'
-  = f.text_area :body, class: "form-control"
+  = f.text_area :body, class: "form-control new-answer-body"
   = f.submit 'Create answer'
 
 = link_to 'Questions', questions_path, class: 'btn btn-default'

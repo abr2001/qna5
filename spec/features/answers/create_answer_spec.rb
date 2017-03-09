@@ -11,22 +11,23 @@ feature 'Create answer', %q{
   scenario 'User create the answer', js: true do
     login_user
     visit question_path(question.id)
-
-    fill_in 'Answer', with: 'text text text'
-    click_on 'Create'
+    within('.new_answer') do
+      fill_in 'Answer', with: 'text text text'
+      click_on 'Create'
+    end
     expect(current_path).to eq question_path(question)
     within('.answers') do
       expect(page).to have_content 'text text text'
     end
-
   end
 
   scenario 'user enters invalid data', js: true do
     login_user
     visit question_path(question.id)
-
-    fill_in 'Answer', with: ''
-    click_on 'Create'
+    within('.new_answer') do
+      fill_in 'Answer', with: ''
+      click_on 'Create'
+    end
     expect(current_path).to eq question_path(question)
     within('.answers') do
       expect(page).to have_content "Body can't be blank"
