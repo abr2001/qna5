@@ -19,6 +19,8 @@ feature 'edit answer for question', %q{
       click_on 'Update'
     end
     expect(page).to have_content 'my new answer'
+    expect(page).to_not have_content answer.body
+    expect(page).to_not have_selector 'textarea'
   end
 
   scenario 'a non-authenticated user edit own answer' do
