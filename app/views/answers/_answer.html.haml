@@ -1,16 +1,15 @@
-.answer{id: "#{answer.id}"}
+.answer{id: "answer-#{answer.id}"}
   .panel.panel-primary
-    .panel-heading= "answer #{index + 1}"
+    .panel-heading= "answer"
     .panel-body
       = answer.body.html_safe
       - if user_signed_in? && current_user.author_of?(answer)
         = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }
-        = link_to 'Edit'
+        = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
-    .well
-      = form_for [@question, answer], remote: true do |f|
-        = f.label :body, 'Answer'
-        = f.text_area :body, class: "form-control"
-        = f.submit 'Update'
-
+        = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
+          .well
+            = f.label :body, 'Answer'
+            = f.text_area :body, class: "form-control"
+            = f.submit 'Update', class: "btn btn-primary"
 
