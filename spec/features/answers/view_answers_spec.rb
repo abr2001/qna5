@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'view answers for question', %q{
   In order to get answers for question

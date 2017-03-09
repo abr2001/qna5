@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'delete answer for question', %q{
   In order to delete answers for question
