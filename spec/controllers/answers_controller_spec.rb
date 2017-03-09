@@ -23,6 +23,32 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    let!(:answer) { create(:answer, user: @user, question: question) }
+    context 'with valid attributes' do
+      it 'update the new answer in the database' do
+        post :update, format: :js, params: { id: answer, answer: { body: 'edited answer' }, question_id: question  }
+        answer.reload
+        expect(answer.body).to eq 'edited answer'
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not save the answer' do
+        post :update, format: :js, params: { id: answer, answer: { body: '' }, question_id: question  }
+        answer.reload
+        expect(answer.body).to_not eq ''
+      end
+    end
+
+    let!(:answer2) { create(:answer, :with_user, question: question) }
+    it "not author can't update answer" do
+        post :update, format: :js, params: { id: answer2, answer: { body: 'edited answer' }, question_id: question  }
+        answer.reload
+        expect(answer.body).to_not eq 'edited answer'
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'author delete answer' do
       let!(:answer) { create(:answer, user: @user, question: question) }

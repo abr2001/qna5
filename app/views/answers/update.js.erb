@@ -1,0 +1,10 @@
+$('.errors').html('');
+
+<% if @answer.valid? %>
+  $('.answers').append("<%= j render @answer, index: @question.answers.count - 1 %>");
+<%else%>
+  $('#<%= @answer.id %>').append("<%= j render 'shared/error_message', item: @answer %>");
+<%end%>
+
+$('#answer_body').val('');
+
