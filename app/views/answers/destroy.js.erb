@@ -1,0 +1,5 @@
+<% unless @answer.persisted? %>
+  $('#answer-<%= @answer.id %>').html("");
+<%end%>
+$('#answer-<%= @answer.id %>').append("<%= j render 'shared/flash' %>");
+

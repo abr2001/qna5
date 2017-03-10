@@ -53,24 +53,24 @@ RSpec.describe AnswersController, type: :controller do
     context 'author delete answer' do
       let!(:answer) { create(:answer, user: @user, question: question) }
       it 'delete answer in database' do
-        expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, format: :js, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirect to question show' do
-        delete :destroy, params: { id: answer, question_id: question }
-        expect(response).to redirect_to question_path(question)
+      it 'render js' do
+        delete :destroy, format: :js, params: { id: answer, question_id: question }
+        expect(response.status).to eq 200
       end
     end
 
     context 'not author delete answer' do
       let!(:answer2) { create(:answer, :with_user, question: question) }
       it 'can not delete answer in database' do
-        expect { delete :destroy, params: { id: answer2, question_id: question } }.to_not change(Answer, :count)
+        expect { delete :destroy, format: :js, params: { id: answer2, question_id: question } }.to_not change(Answer, :count)
       end
 
-      it 'redirect to question show' do
-        delete :destroy, params: { id: answer2, question_id: question }
-        expect(response).to redirect_to question_path(question)
+      it 'render js' do
+        delete :destroy, format: :js, params: { id: answer2, question_id: question }
+        expect(response.status).to eq 200
       end
     end
   end
