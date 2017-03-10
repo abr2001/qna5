@@ -1,0 +1,11 @@
+- @question.errors.full_messages.each do |error|
+  .alert.alert-danger= error
+
+= form_for @question, remote: true do |f|
+  = f.label :title
+  = f.text_field :title, class: "form-control"
+
+  = f.label :body, 'Text'
+  = f.text_area :body, class: "form-control"
+
+  = f.submit 'Save', class: "btn btn-primary"
