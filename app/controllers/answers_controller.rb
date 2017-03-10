@@ -8,13 +8,12 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@answer)
+    if current_user.  author_of?(@answer)
       @answer.destroy
-      notice = 'Your answer successfully deleted'
+      flash[:notice] = 'Your answer successfully deleted'
     else
-      notice = 'Only the author can delete the answer'
+      flash[:notice] = 'Only the author can delete the answer'
     end
-    redirect_to question_path(params[:question_id]), notice: notice
   end
 
   def update
