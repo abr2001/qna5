@@ -14,7 +14,7 @@ feature 'Create question', %q{
     click_on 'Add question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Text', with: 'text text text'
-    click_on 'Create'
+    click_on 'Save'
     expect(page).to have_content 'Your question successfully created.'
     expect(page).to have_content 'Test question'
     expect(page).to have_content 'text text text'
@@ -26,7 +26,7 @@ feature 'Create question', %q{
     click_on 'Add question'
     fill_in 'Title', with: ''
     fill_in 'Text', with: ''
-    click_on 'Create'
+    click_on 'Save'
     expect(page).to have_content "Title can't be blank"
     expect(page).to have_content "Body can't be blank"
   end

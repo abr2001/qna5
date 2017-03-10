@@ -1,0 +1,13 @@
+$('.errors').html('');
+
+<% if @question.valid? %>
+  $('.question').html("<%= j render @question%>");
+    $('.edit-question-link').click(function(e) {
+      e.preventDefault();
+      $(this).hide();
+      $('.edit_question').show();
+    });
+
+<%else%>
+  $('.question').append("<%= j render 'shared/error_message', item: @question %>");
+<%end%>

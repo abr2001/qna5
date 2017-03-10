@@ -1,11 +1,1 @@
-- @question.errors.full_messages.each do |error|
-  .alert.alert-danger= error
-
-= form_for @question do |f|
-  = f.label :title
-  = f.text_field :title
-
-  = f.label :body, 'Text'
-  = f.text_area :body
-
-  = f.submit 'Create'
+= render 'form'
