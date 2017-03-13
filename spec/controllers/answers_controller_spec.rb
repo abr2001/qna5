@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
 
   login_user
-  let(:question) { create(:question) }
+  let!(:question) { create(:question, user: @user) }
+  let!(:answer) { create(:answer, user: @user, question: question) }
+  let!(:answer2) { create(:answer, :with_user, question: question) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -24,7 +26,6 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:answer) { create(:answer, user: @user, question: question) }
     context 'with valid attributes' do
       it 'update the new answer in the database' do
         post :update, format: :js, params: { id: answer, answer: { body: 'edited answer' }, question_id: question  }
@@ -41,7 +42,6 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    let!(:answer2) { create(:answer, :with_user, question: question) }
     it "not author can't update answer" do
         post :update, format: :js, params: { id: answer2, answer: { body: 'edited answer' }, question_id: question  }
         answer.reload
@@ -51,7 +51,6 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'author delete answer' do
-      let!(:answer) { create(:answer, user: @user, question: question) }
       it 'delete answer in database' do
         expect { delete :destroy, format: :js, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
       end
@@ -63,7 +62,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'not author delete answer' do
-      let!(:answer2) { create(:answer, :with_user, question: question) }
       it 'can not delete answer in database' do
         expect { delete :destroy, format: :js, params: { id: answer2, question_id: question } }.to_not change(Answer, :count)
       end
@@ -71,6 +69,30 @@ RSpec.describe AnswersController, type: :controller do
       it 'render js' do
         delete :destroy, format: :js, params: { id: answer2, question_id: question }
         expect(response.status).to eq 200
+      end
+    end
+  end
+
+  describe 'GET #set_best' do
+    context 'Question author selects a best answer' do
+      it 'change answer in database' do
+        get :set_best, format: :js, params: { answer_id: answer, question_id: question  }, xhr: true
+        answer.reload
+        expect(answer.best).to eq true
+      end
+      it 'render js' do
+        get :set_best, format: :js, params: { answer_id: answer, question_id: question  }, xhr: true
+        expect(response.status).to eq 200
+      end
+    end
+    let!(:user2) { create(:user) }
+    let!(:question2) { create(:question, user: user2) }
+    let!(:answer_22) { create(:answer, :with_user, question: question2) }
+    context 'Not Question author not selects a best answer' do
+      it 'not change answer in database' do
+        get :set_best, format: :js, params: { answer_id: answer_22, question_id: question2  }, xhr: true
+        answer_22.reload
+        expect(answer_22.best).to eq false
       end
     end
   end

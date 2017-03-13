@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_answer, only: [:destroy, :update]
+  before_action :load_answer, only: [:destroy, :update, :set_best]
 
   def create
     @question = Question.find(params[:question_id])
@@ -23,6 +23,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def set_best
+    if current_user.author_of?(@answer.question)
+      @answer.update_attributes(best: true)
+    end
+  end
+
   private
 
   def answer_params
@@ -30,7 +36,7 @@ class AnswersController < ApplicationController
   end
 
   def load_answer
-    @answer = Answer.find(params[:id])
+    @answer = Answer.find(params[:id] || params[:answer_id])
   end
 
 
