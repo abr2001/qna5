@@ -6,4 +6,4 @@ $ ->
   $('.edit-question-link').click (e) ->
     e.preventDefault();
     $(this).hide();
-    $('.edit_question').show()
+    $('.edit_question').show();
