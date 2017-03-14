@@ -1,7 +1,7 @@
 $('.errors').html('');
 
 <% if @answer.valid? %>
-  $('#answer-<%= @answer.id %>').html("<%= j render @answer, index: @question.answers.count - 1 %>");
+  $('#answer-<%= @answer.id %>').html("<%= j render @answer %>");
     $('.edit-answer-link').click(function(e) {
       e.preventDefault();
       $(this).hide();
