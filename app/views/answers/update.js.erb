@@ -9,7 +9,7 @@ $('.errors').html('');
       $('form#edit-answer-' + answer_id).show();
   });
 <%else%>
-  $('#<%= @answer.id %>').append("<%= j render 'shared/error_message', item: @answer %>");
+  $('#answer-<%= @answer.id %>').append("<%= j render 'shared/error_message', item: @answer %>");
 <%end%>
 
 $('#answer_body').val('');

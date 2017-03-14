@@ -1,0 +1,2 @@
+- @question.answers.order(best: :desc).each_with_index do |answer, index|
+  = render 'answers/answer', answer: answer, index: index
