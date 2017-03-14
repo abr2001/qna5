@@ -37,13 +37,12 @@ feature 'best answer for question', %q{
     end
   end
 
-  after {answer_2.reload}
   scenario 'The user wants to select the best answer', js: true do
     login_user
     visit question_path(question.id)
     within("#answer-#{answer_2.id}") do
       click_on 'Best answer'
-      expect(answer_2.best).to eq true
+      expect(page).to_not have_link 'Best answer'
     end
   end
 

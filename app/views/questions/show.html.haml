@@ -5,8 +5,7 @@ Count of answers:
 = @question.answers.count
 
 .answers
-  - @question.answers.each_with_index do |answer, index|
-    = render 'answers/answer', answer: answer, index: index
+  = render 'answers/list'
 
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Answer'
