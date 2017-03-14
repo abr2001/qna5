@@ -24,10 +24,19 @@ feature 'edit answer for question', %q{
   end
 
   scenario 'a non-authenticated user edit own answer' do
+    visit question_path(question.id)
+    within('.answer') do
+      expect(page).to_not have_link 'Edit'
+    end
   end
 
   let!(:another_user) { create(:user) }
   scenario "The user tries to edit someone else's answer" do
+    login_another_user
+    visit question_path(question.id)
+    within('.answer') do
+      expect(page).to_not have_link 'Edit'
+    end
   end
 
 end
