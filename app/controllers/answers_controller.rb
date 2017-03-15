@@ -26,8 +26,7 @@ class AnswersController < ApplicationController
 
   def set_best
     if current_user.author_of?(@answer.question)
-      Answer.where(question_id: @answer.question).where(best: true).update_all(best: false)
-      @answer.update_attributes(best: true)
+      @answer.set_best
     else
       render status: :forbidden
     end
