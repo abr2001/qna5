@@ -14,7 +14,6 @@ feature 'delete answer for question', %q{
     login_user
     visit question_path(question.id)
     click_on 'Delete'
-    expect(page).to have_content 'Your answer successfully deleted'
     expect(page).to_not have_content 'my answer for question'
   end
 

@@ -4,10 +4,18 @@ class Answer < ApplicationRecord
   validates :body, :user, presence: true
   validate :best_only_one
 
+
+  def set_best
+    User.transaction do
+      Answer.where(question_id: question).where(best: true).update_all(best: false)
+      update_attributes(best: true)
+    end
+  end
+
   private
 
   def best_only_one
-    if best != best_was and Answer.where(best: true).where(question_id: question_id).count > 0
+    if best != best_was && question.answers.where(best: true).exists?
       errors.add(:base, 'Must be the best only one answer')
     end
   end
