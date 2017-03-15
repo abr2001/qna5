@@ -38,6 +38,8 @@ class QuestionsController < ApplicationController
   def update
     if current_user.author_of?(@question)
       @question.update(quesion_params)
+    else
+      render status: :forbidden
     end
   end
 
