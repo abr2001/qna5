@@ -46,6 +46,7 @@ RSpec.describe AnswersController, type: :controller do
         post :update, format: :js, params: { id: answer2, answer: { body: 'edited answer' }, question_id: question  }
         answer.reload
         expect(answer.body).to_not eq 'edited answer'
+        expect(response).to have_http_status(:forbidden)
     end
   end
 
@@ -93,6 +94,7 @@ RSpec.describe AnswersController, type: :controller do
         get :set_best, format: :js, params: { answer_id: answer_22, question_id: question2  }, xhr: true
         answer_22.reload
         expect(answer_22.best).to eq false
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

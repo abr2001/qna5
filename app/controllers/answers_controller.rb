@@ -19,6 +19,8 @@ class AnswersController < ApplicationController
   def update
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
+    else
+      render status: :forbidden
     end
   end
 
@@ -26,6 +28,8 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer.question)
       Answer.where(question_id: @answer.question).where(best: true).update_all(best: false)
       @answer.update_attributes(best: true)
+    else
+      render status: :forbidden
     end
   end
 
