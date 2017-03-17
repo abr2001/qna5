@@ -6,7 +6,7 @@ class Answer < ApplicationRecord
 
 
   def set_best
-    User.transaction do
+    Answer.transaction do
       Answer.where(question_id: question).where(best: true).update_all(best: false)
       update_attributes(best: true)
     end

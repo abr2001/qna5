@@ -16,6 +16,15 @@ RSpec.describe Answer, type: :model do
       expect(answer.valid?).to eq true
       expect(answer_2.errors.messages[:base]).to include('Must be the best only one answer')
     end
+
+  describe 'methods' do
+    it 'Set_best must change attribute best to true in database' do
+      answer.set_best
+      answer.reload
+      expect(answer.best).to eq(true)
+    end
+  end
+
   end
 end
 

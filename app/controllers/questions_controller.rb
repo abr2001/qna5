@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
     if current_user.author_of?(@question)
       @question.update(quesion_params)
     else
-      render status: :forbidden
+      head :forbidden
     end
   end
 
