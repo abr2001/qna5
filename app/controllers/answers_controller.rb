@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer)
       @answer.update(answer_params)
     else
-      render status: :forbidden
+      head :forbidden
     end
   end
 
@@ -28,7 +28,7 @@ class AnswersController < ApplicationController
     if current_user.author_of?(@answer.question)
       @answer.set_best
     else
-      render status: :forbidden
+      head :forbidden
     end
   end
 
