@@ -18,7 +18,7 @@ RSpec.describe Answer, type: :model do
     end
 
   describe 'methods' do
-    it 'Set_best must change attribute best to true in database' do
+    it 'Set_best must change attributes best in database' do
       answer.set_best
       answer.reload
       expect(answer.best).to eq(true)
