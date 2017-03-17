@@ -22,6 +22,11 @@ RSpec.describe Answer, type: :model do
       answer.set_best
       answer.reload
       expect(answer.best).to eq(true)
+      answer_2.set_best
+      answer_2.reload
+      answer.reload
+      expect(answer_2.best).to eq(true)
+      expect(answer.best).to eq(false)
     end
   end
 
