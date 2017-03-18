@@ -18,15 +18,18 @@ RSpec.describe Answer, type: :model do
     end
 
   describe 'methods' do
-    it 'Set_best must change attributes best in database' do
-      answer.set_best
-      answer.reload
-      expect(answer.best).to eq(true)
-      answer_2.set_best
-      answer_2.reload
-      answer.reload
-      expect(answer_2.best).to eq(true)
-      expect(answer.best).to eq(false)
+    context 'Set_best' do
+      it  'must change attribute best to true in database' do
+        answer.set_best
+        answer.reload
+        expect(answer).to be_best
+      end
+      let!(:answer_best) { create(:answer, :with_user, question: question, best: true) }
+      it  'needs to change other attributes to false in database' do
+        answer.set_best
+        answer_best.reload
+        expect(answer_best).to_not be_best
+      end
     end
   end
 
