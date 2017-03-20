@@ -39,6 +39,7 @@ gem 'haml-rails'
 gem 'html2haml'
 gem 'bootstrap-sass'
 gem 'devise'
+gem 'carrierwave'
 
 group :test do
   gem 'rspec-rails'
