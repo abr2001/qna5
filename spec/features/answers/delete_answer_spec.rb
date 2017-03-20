@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'delete answer for question', %q{
   In order to delete answers for question
@@ -10,11 +10,10 @@ feature 'delete answer for question', %q{
   let!(:user) { create(:user) }
   let!(:answer) { create(:answer, user: user, body: 'my answer for question', question: question) }
 
-  scenario 'The user deletes their answer' do
+  scenario 'The user deletes their answer', js: true do
     login_user
     visit question_path(question.id)
     click_on 'Delete'
-    expect(page).to have_content 'Your answer successfully deleted'
     expect(page).to_not have_content 'my answer for question'
   end
 

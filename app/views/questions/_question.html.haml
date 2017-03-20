@@ -1,0 +1,7 @@
+%b= question.title
+%p= question.body.html_safe
+.action-question
+  - if user_signed_in? && current_user.author_of?(@question)
+    = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+    = link_to 'Edit', '', class: 'edit-question-link'
+    = render 'form'

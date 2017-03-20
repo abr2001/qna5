@@ -100,4 +100,31 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    context 'with valid attributes' do
+      it 'update the new question in the database' do
+        post :update, format: :js, params: { id: question, question: { body: 'edited question' } }
+        question.reload
+        expect(question.body).to eq 'edited question'
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not save the question' do
+        post :update, format: :js, params: { id: question, question: { body: '' } }
+        question.reload
+        expect(question.body).to_not eq ''
+      end
+    end
+
+    let!(:question_2) { create(:question) }
+    it "not author can't update question" do
+      post :update, format: :js, params: { id: question_2, question: { body: 'edited question' } }
+      question.reload
+      expect(question.body).to_not eq 'edited answer'
+      expect(response).to have_http_status(:forbidden)
+    end
+
+  end
+
 end

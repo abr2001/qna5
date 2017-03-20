@@ -1,0 +1,11 @@
+<% if @answer.valid? %>
+  $('.answers').html("<%= j render 'answers/list' %>");
+    $('.edit-answer-link').click(function(e) {
+      e.preventDefault();
+      $(this).hide();
+      answer_id = $(this).data('answerId');
+      $('form#edit-answer-' + answer_id).show();
+  });
+<%else%>
+  $('#answer-<%= @answer.id %>').append("<%= j render 'shared/error_message', item: @answer %>");
+<%end%>

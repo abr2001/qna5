@@ -1,26 +1,49 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  before_action :load_answer, only: [:destroy, :update, :set_best]
+  before_action :load_question, only: [:update, :set_best, :create]
 
   def create
-    @question = Question.find(params[:question_id])
     @answer = @question.answers.create(answer_params.merge(user: current_user))
   end
 
   def destroy
-    @answer = Answer.find(params[:id])
-    if current_user.author_of?(@answer)
+    if current_user.  author_of?(@answer)
       @answer.destroy
-      notice = 'Your answer successfully deleted'
+      flash[:notice] = 'Your answer successfully deleted'
     else
-      notice = 'Only the author can delete the answer'
+      flash[:notice] = 'Only the author can delete the answer'
     end
-    redirect_to question_path(params[:question_id]), notice: notice
+  end
+
+  def update
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+    else
+      head :forbidden
+    end
+  end
+
+  def set_best
+    if current_user.author_of?(@answer.question)
+      @answer.set_best
+    else
+      head :forbidden
+    end
   end
 
   private
 
   def answer_params
     params.require(:answer).permit(:body)
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id] || params[:answer_id])
+  end
+
+  def load_question
+    @question = Question.find(params[:question_id])
   end
 
 

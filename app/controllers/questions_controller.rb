@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_question, only: [:show, :destroy]
+  before_action :load_question, only: [:show, :destroy, :update]
 
 
   def index
@@ -33,6 +33,14 @@ class QuestionsController < ApplicationController
       notice = 'Only the author can delete the question'
     end
     redirect_to questions_path, notice: notice
+  end
+
+  def update
+    if current_user.author_of?(@question)
+      @question.update(quesion_params)
+    else
+      head :forbidden
+    end
   end
 
   private

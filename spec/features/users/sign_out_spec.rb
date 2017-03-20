@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'Siging out' do
   let!(:user) { create(:user) }

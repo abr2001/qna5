@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'features/features_helper'
 
 feature 'Create answer', %q{
   In order to get answer from community
@@ -11,22 +11,23 @@ feature 'Create answer', %q{
   scenario 'User create the answer', js: true do
     login_user
     visit question_path(question.id)
-
-    fill_in 'Answer', with: 'text text text'
-    click_on 'Create'
+    within('.new_answer') do
+      fill_in 'Answer', with: 'text text text'
+      click_on 'Create'
+    end
     expect(current_path).to eq question_path(question)
     within('.answers') do
       expect(page).to have_content 'text text text'
     end
-
   end
 
   scenario 'user enters invalid data', js: true do
     login_user
     visit question_path(question.id)
-
-    fill_in 'Answer', with: ''
-    click_on 'Create'
+    within('.new_answer') do
+      fill_in 'Answer', with: ''
+      click_on 'Create'
+    end
     expect(current_path).to eq question_path(question)
     within('.answers') do
       expect(page).to have_content "Body can't be blank"
@@ -35,10 +36,7 @@ feature 'Create answer', %q{
 
   scenario 'a non-authenticated user tries to answer' do
     visit question_path(question.id)
-
-    fill_in 'Answer', with: 'test text'
-    click_on 'Create'
-    expect(page).to have_content "You need to sign in or sign up before continuing"
+    expect(page).to_not have_link 'Create'
   end
 
 end
