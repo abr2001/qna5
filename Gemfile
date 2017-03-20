@@ -46,7 +46,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
   gem 'launchy'
@@ -65,6 +64,9 @@ end
 
 group :test, :development do
   gem 'byebug'
+  gem 'ffaker'
+  gem 'pry-rails'
+  gem 'pry-nav'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
