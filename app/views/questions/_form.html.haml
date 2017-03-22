@@ -8,8 +8,6 @@
   = f.label :body, 'Text'
   = f.text_area :body, class: "form-control"
 
-  = f.fields_for :attachments do |a|
-    = a.label :file
-    = a.file_field :file
+  = render 'shared/file', f: f
 
   = f.submit 'Save', class: "btn btn-primary"

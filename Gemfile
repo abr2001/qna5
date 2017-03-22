@@ -40,6 +40,7 @@ gem 'html2haml'
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :test do
   gem 'rspec-rails'

@@ -4,6 +4,11 @@
 Count of answers:
 = @question.answers.count
 
+%p Attachments:
+%ul
+  - @question.attachments.each do |a|
+    %li= link_to a.file.identifier, a.file.url
+
 .answers
   = render 'answers/list'
 
@@ -11,6 +16,8 @@ Count of answers:
   = form_for [@question, @answer], remote: true do |f|
     = f.label :body, 'Answer'
     = f.text_area :body, class: "form-control new-answer-body"
+    = render 'shared/file', f: f
+
     = f.submit 'Create answer'
 
 = link_to 'Questions', questions_path, class: 'btn btn-default'
