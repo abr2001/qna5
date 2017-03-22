@@ -19,6 +19,6 @@ feature 'Add file to questions', %q{
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Save'
 
-    expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+    expect(page).to have_link 'spec_helper.rb', href: Question.last.attachments.last.file.url
   end
 end
