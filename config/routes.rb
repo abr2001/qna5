@@ -7,4 +7,7 @@ Rails.application.routes.draw do
       get :set_best
     end
   end
+
+  resources :attachments, only: :destroy
+
 end
