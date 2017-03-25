@@ -7,8 +7,10 @@ Count of answers:
 %p Attachments:
 %ul
   - @question.attachments.each do |attachment|
-    %li= link_to attachment.file.identifier, attachment.file.url
-    .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }
+    .attachment{id: "attachment-#{attachment.id}"}
+      %li
+        = link_to attachment.file.identifier, attachment.file.url
+        .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 .answers
   = render 'answers/list'
