@@ -19,10 +19,21 @@ feature 'Delete file for question', %q{
     expect(page).to have_link attachment.file.filename, href: attachment.file.url
   end
 
-  scenario 'User delete file for question', js:true do
+  scenario 'User as athor delete file for question', js:true do
     within('.delete_question_file') do
       click_on 'Delete'
     end
     expect(page).to_not have_link attachment.file.filename, href: attachment.file.url
   end
+
+  let!(:question2) { create(:question) }
+  let!(:attachment2) { create(:attachment, attachable: question2)}
+
+  scenario 'User as not athor try delete file for question, but not sees link delete', js:true do
+    visit question_path(question2)
+    within('.attachment') do
+      expect(page).to_not have_link 'Delete'
+    end
+  end
+
 end

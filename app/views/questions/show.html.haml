@@ -10,7 +10,8 @@ Count of answers:
     .attachment{id: "attachment-#{attachment.id}"}
       %li
         = link_to attachment.file.identifier, attachment.file.url
-        .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+        - if user_signed_in? && current_user.author_of?(@question)
+          .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 .answers
   = render 'answers/list'
