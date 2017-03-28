@@ -10,17 +10,18 @@ Count of answers:
     .attachment{id: "attachment-#{attachment.id}"}
       %li
         = link_to attachment.file.identifier, attachment.file.url
-        - if user_signed_in? && current_user.author_of?(@question)
+        - if user_signed_in? && current_user.author_of?(@question) && attachment.persisted?
           .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 .answers
   = render 'answers/list'
 
 - if user_signed_in?
-  = form_for [@question, @answer], remote: true do |f|
+  = nested_form_for [@question, @answer], remote: true do |f|
     = f.label :body, 'Answer'
     = f.text_area :body, class: "form-control new-answer-body"
     = render 'shared/file', f: f
+    %p= f.link_to_add "Add attachment", :attachments, class: "btn btn-success"
 
     = f.submit 'Create answer'
 

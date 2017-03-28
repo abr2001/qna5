@@ -41,6 +41,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'nested_form'
 
 group :test do
   gem 'rspec-rails'
