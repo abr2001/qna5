@@ -5,4 +5,11 @@
     = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
     = link_to 'Edit', '', class: 'edit-question-link'
     = form_for @question, remote: true do |f|
-      = render 'form', f: f
+      = f.label :title
+      = f.text_field :title, class: "form-control"
+
+      = f.label :body, 'Text'
+      = f.text_area :body, class: "form-control"
+
+      = f.submit 'Update', class: "btn btn-primary"
+

@@ -1,3 +1,7 @@
+%br
 = f.fields_for :attachments do |a|
-  = a.label :file
-  = a.file_field :file
+  .well
+    = a.label :file
+    = a.file_field :file
+    %br
+    = a.link_to_remove "Remove this attachment", class: "btn btn-default"
