@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.  author_of?(@answer)
+    if current_user.author_of?(@answer)
       @answer.destroy
       flash[:notice] = 'Your answer successfully deleted'
     else
