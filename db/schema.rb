@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320043458) do
+ActiveRecord::Schema.define(version: 20170402095441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20170320043458) do
     t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
 
+  create_table "rates", force: :cascade do |t|
+    t.integer  "value"
+    t.integer  "user_id"
+    t.integer  "ratable_id"
+    t.string   "ratable_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
+    t.index ["user_id", "ratable_id", "ratable_type"], name: "index_rates_on_user_id_and_ratable_id_and_ratable_type", using: :btree
+    t.index ["user_id"], name: "index_rates_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -62,4 +74,5 @@ ActiveRecord::Schema.define(version: 20170320043458) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "questions", "users"
+  add_foreign_key "rates", "users"
 end
