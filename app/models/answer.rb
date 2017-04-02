@@ -2,6 +2,7 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :rates, as: :ratable, dependent: :destroy
 
   validates :body, :user, presence: true
   validate :best_only_one

@@ -1,6 +1,6 @@
 require 'features/features_helper'
 
-feature 'edit question', %q{
+feature 'add rate to question', %q{
   In order to evaluate the question
   Authenticated user
   I want to rate the question
@@ -15,7 +15,7 @@ feature 'edit question', %q{
     within('.action-question') do
       click_on '+'
     end
-    within('.rating-questionn') do
+    within('.rating-question') do
       expect(page).to have_content '1'
     end
   end
