@@ -1,0 +1,4 @@
+<% unless @attachment.persisted? %>
+  $('#attachment-<%= @attachment.id %>').remove();
+<%end%>
+

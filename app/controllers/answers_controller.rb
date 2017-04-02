@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.  author_of?(@answer)
+    if current_user.author_of?(@answer)
       @answer.destroy
       flash[:notice] = 'Your answer successfully deleted'
     else
@@ -35,7 +35,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attachments_attributes: [:file, :_destroy])
   end
 
   def load_answer

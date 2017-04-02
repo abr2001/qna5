@@ -10,6 +10,16 @@
         = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
         = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
+      %p Attachments:
+      %ul
+        - answer.attachments.each do |attachment|
+          .attachment{id: "attachment-#{attachment.id}"}
+            %li= link_to attachment.file.identifier, attachment.file.url
+            - if user_signed_in? && current_user.author_of?(answer) && attachment.persisted?
+              .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+
+
+
         = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
           .well
             = f.label :body, 'Answer'

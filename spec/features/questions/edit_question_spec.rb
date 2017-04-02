@@ -16,7 +16,7 @@ feature 'edit question', %q{
       click_on 'Edit'
       fill_in 'Title', with: 'my new Title'
       fill_in 'Text', with: 'my new question'
-      click_on 'Save'
+      click_on 'Update'
       expect(page).to_not have_selector 'textarea'
       expect(page).to have_content 'my new question'
       expect(page).to have_content 'my new Title'

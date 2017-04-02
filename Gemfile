@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.1'
+gem 'rails', '~> 5.0.2'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
@@ -39,13 +39,15 @@ gem 'haml-rails'
 gem 'html2haml'
 gem 'bootstrap-sass'
 gem 'devise'
+gem 'carrierwave'
+gem 'remotipart'
+gem 'nested_form'
 
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
   gem 'launchy'
@@ -64,6 +66,9 @@ end
 
 group :test, :development do
   gem 'byebug'
+  gem 'ffaker'
+  gem 'pry-rails'
+  gem 'pry-nav'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

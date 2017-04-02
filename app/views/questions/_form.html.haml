@@ -1,11 +1,11 @@
-- @question.errors.full_messages.each do |error|
-  .alert.alert-danger= error
+= f.label :title
+= f.text_field :title, class: "form-control"
 
-= form_for @question, remote: true do |f|
-  = f.label :title
-  = f.text_field :title, class: "form-control"
+= f.label :body, 'Text'
+= f.text_area :body, class: "form-control"
 
-  = f.label :body, 'Text'
-  = f.text_area :body, class: "form-control"
+= render 'shared/file', f: f
 
-  = f.submit 'Save', class: "btn btn-primary"
+%p= f.link_to_add "Add attachment", :attachments, class: "btn btn-success"
+
+= f.submit 'Save', class: "btn btn-primary"

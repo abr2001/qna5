@@ -1,1 +1,5 @@
-= render 'form'
+- @question.errors.full_messages.each do |error|
+  .alert.alert-danger= error
+
+= nested_form_for @question do |f|
+  = render 'form', f: f
