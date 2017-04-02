@@ -4,6 +4,7 @@
   - if user_signed_in? && current_user.author_of?(@question)
     = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
     = link_to 'Edit', '', class: 'edit-question-link'
+
     = form_for @question, remote: true do |f|
       = f.label :title
       = f.text_field :title, class: "form-control"
@@ -13,3 +14,6 @@
 
       = f.submit 'Update', class: "btn btn-primary"
 
+  %br
+  = link_to '+', '', class: 'btn btn-success'
+  .rating-question= question.rating
