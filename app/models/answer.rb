@@ -6,7 +6,7 @@ class Answer < ApplicationRecord
   validates :body, :user, presence: true
   validate :best_only_one
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
 
   def set_best
