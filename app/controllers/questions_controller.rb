@@ -12,17 +12,27 @@ class QuestionsController < ApplicationController
   end
 
   def rate
-    if current_user.author_of?(@question) || @question.rates.where(user: current_user).exists?
+    if current_user.author_of?(@question)
       head :forbidden
       return
     end
 
-    rate = @question.rates.build(user: current_user, value: 1)
-    respond_to do |format|
-      if rate.save
-        format.json { render json: @question.rating }
-      else
-        format.json { head :unprocessable_entity }
+    value = params[:negative].present? ? -1 : 1
+
+    rate = @question.rates.where(user: current_user).first
+
+    ActiveRecord::Base.transaction do
+      if rate.present? && rate.value != value
+        rate.destroy
+      end
+      rate = @question.rates.build(user: current_user, value: value)
+
+      respond_to do |format|
+        if rate.save
+          format.json { render json: @question.rating }
+        else
+          format.json { head :unprocessable_entity }
+        end
       end
     end
   end
