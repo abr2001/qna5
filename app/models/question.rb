@@ -8,7 +8,7 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
-  def  rating
+  def rating
     rates.sum(:value)
   end
 

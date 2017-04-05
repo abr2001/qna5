@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_question, only: [:show, :destroy, :update]
+  before_action :load_question, only: [:show, :destroy, :update, :rate]
 
 
   def index
@@ -9,7 +9,22 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    #@question.attachments.build
+  end
+
+  def rate
+    if current_user.author_of?(@question) || @question.rates.where(user: current_user).exists?
+      head :forbidden
+      return
+    end
+
+    rate = @question.rates.build(user: current_user, value: 1)
+    respond_to do |format|
+      if rate.save
+        format.json { render json: @question.rating }
+      else
+        format.json { head :unprocessable_entity }
+      end
+    end
   end
 
   def create
@@ -24,7 +39,6 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    #@answer.attachments.build
   end
 
   def destroy
@@ -52,7 +66,7 @@ class QuestionsController < ApplicationController
   end
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.find(params[:id] || params[:question_id])
   end
 
 end

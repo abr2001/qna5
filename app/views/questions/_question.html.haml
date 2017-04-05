@@ -14,6 +14,7 @@
 
       = f.submit 'Update', class: "btn btn-primary"
 
-  %br
-  = link_to '+', '', class: 'btn btn-success'
-  .rating-question= question.rating
+  - if user_signed_in? && !current_user.author_of?(@question)
+    %br
+    = link_to '+', question_rate_path(question), remote:true, class: 'btn btn-success btn-rate-question'
+    .rating-question= question.rating

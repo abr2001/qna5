@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions do
+    get :rate
     resources :answers do
       get :set_best
     end
