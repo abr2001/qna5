@@ -18,13 +18,16 @@ class QuestionsController < ApplicationController
     end
 
     value = params[:negative].present? ? -1 : 1
-
+    #binding.pry
     rate = @question.rates.where(user: current_user).first
 
-    ActiveRecord::Base.transaction do
-      if rate.present? && rate.value != value
-        rate.destroy
-      end
+    if rate.present? && rate.value == value
+      head :forbidden
+      return
+    end
+
+    Rate.transaction do
+      rate.destroy if rate.present?
       rate = @question.rates.build(user: current_user, value: value)
 
       respond_to do |format|
