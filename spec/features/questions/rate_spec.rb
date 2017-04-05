@@ -37,6 +37,9 @@ feature 'add rate to question', %q{
     within('.action-question') do
       click_on '-'
     end
+    within('.rating-question') do
+      expect(page).to have_content '-1'
+    end
   end
 
 
