@@ -9,6 +9,6 @@ class CreateRates < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     add_index :rates, [:ratable_id, :ratable_type]
-    add_index :rates, [:user_id, :ratable_id, :ratable_type]
+    add_index :rates, [:user_id, :ratable_id, :ratable_type], unique: true
   end
 end

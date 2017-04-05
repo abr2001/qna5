@@ -15,6 +15,7 @@ feature 'add rate to question', %q{
     within('.action-question') do
       click_on '+'
     end
+    save_and_open_page
     within('.rating-question') do
       expect(page).to have_content '1'
     end

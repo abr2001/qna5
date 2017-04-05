@@ -7,3 +7,6 @@ $ ->
     e.preventDefault();
     $(this).hide();
     $('.edit_question').show();
+
+  $('.btn-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
+    $('.rating-question').html(xhr.responseText)

@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20170402095441) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["ratable_id", "ratable_type"], name: "index_rates_on_ratable_id_and_ratable_type", using: :btree
-    t.index ["user_id", "ratable_id", "ratable_type"], name: "index_rates_on_user_id_and_ratable_id_and_ratable_type", using: :btree
+    t.index ["user_id", "ratable_id", "ratable_type"], name: "index_rates_on_user_id_and_ratable_id_and_ratable_type", unique: true, using: :btree
     t.index ["user_id"], name: "index_rates_on_user_id", using: :btree
   end
 
