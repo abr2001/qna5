@@ -1,20 +1,22 @@
-%b= question.title
-%p= question.body.html_safe
-.action-question
-  - if user_signed_in? && current_user.author_of?(@question)
-    = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
-    = link_to 'Edit', '', class: 'edit-question-link'
+.row
+  .col-md-1.action-question
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to 'Edit', '', class: 'edit-question-link'
 
-    = form_for @question, remote: true do |f|
-      = f.label :title
-      = f.text_field :title, class: "form-control"
+      = form_for @question, remote: true do |f|
+        = f.label :title
+        = f.text_field :title, class: "form-control"
 
-      = f.label :body, 'Text'
-      = f.text_area :body, class: "form-control"
+        = f.label :body, 'Text'
+        = f.text_area :body, class: "form-control"
 
-      = f.submit 'Update', class: "btn btn-primary"
+        = f.submit 'Update', class: "btn btn-primary"
 
-  - if user_signed_in? && !current_user.author_of?(@question)
-    %br
-    = link_to '+', question_rate_path(question), remote:true, class: 'btn btn-success btn-rate-question'
-    .rating-question= question.rating
+    - if user_signed_in? && !current_user.author_of?(@question)
+      = link_to '+', question_rate_path(question), remote:true, class: 'btn btn-success btn-rate-question'
+      .rating-question= question.rating
+      = link_to '-', question_rate_path(question, negative: true), remote:true, class: 'btn btn-danger btn-rate-question'
+  .col-md-11
+    %b= question.title
+    %p= question.body.html_safe
