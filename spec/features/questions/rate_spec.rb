@@ -7,17 +7,27 @@ feature 'add rate to question', %q{
 } do
 
   let!(:user) { create(:user) }
-  let!(:question) { create(:question) }
+  let!(:another_user) { create(:user) }
+  let!(:question) { create(:question, user: user) }
+
+  scenario 'The autor of question can not rate', js: true do
+    login_user
+    visit question_path(question.id)
+    within('.action-question') do
+      expect(page).to_not have_link '+'
+    end
+  end
 
   scenario 'The user puts a plus for the question', js: true do
-    login_user
+    login_another_user
     visit question_path(question.id)
     within('.action-question') do
       click_on '+'
     end
-    save_and_open_page
     within('.rating-question') do
       expect(page).to have_content '1'
     end
   end
+
+
 end
