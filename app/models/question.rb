@@ -1,8 +1,8 @@
 class Question < ApplicationRecord
   include Associations
+  include HasUser
+
   has_many :answers, dependent: :destroy
-  belongs_to :user
 
-  validates :title, :body, :user, presence: true
-
+  validates :title, :body, presence: true
 end

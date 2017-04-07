@@ -1,9 +1,9 @@
 class Answer < ApplicationRecord
   include Associations
+  include HasUser
   belongs_to :question
-  belongs_to :user
 
-  validates :body, :user, presence: true
+  validates :body, presence: true
   validate :best_only_one
 
   def set_best
