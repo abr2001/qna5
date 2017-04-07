@@ -17,14 +17,12 @@ class QuestionsController < ApplicationController
       return
     end
 
-    value = params[:negative].present? ? -1 : 1
-    #binding.pry
-    rate = @question.rates.where(user: current_user).first
-
-    if rate.present? && rate.value == value
+    if current_user.already_has_rate_of?(@question)
       head :forbidden
       return
     end
+
+    value = params[:negative].present? ? -1 : 1
 
     Rate.transaction do
       rate.destroy if rate.present?
