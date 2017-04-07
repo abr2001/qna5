@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_question, only: [:show, :destroy, :update, :rate]
+  before_action :load_question, only: [:show, :destroy, :update, :rate, :cancel_rate]
 
 
   def index
@@ -11,13 +11,26 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def rate
+  def cancel_rate
+    if current_user.author_of?(@question)
+      head :forbidden
+      return
+    end
+
+    unless current_user.already_has_rate_of?(@question)
+      head :forbidden
+      return
+    end
+
+    rate = @question.rates.where(user_id: current_user).first
+    rate.destroy
+
     respond_to do |format|
-      format.json { render json: {rating: @question.rating  } }
+      format.json { render json: {rating: @question.rating, rate: current_user.rate_of(@question)  } }
     end
   end
 
-  def rate2
+  def rate
     if current_user.author_of?(@question)
       head :forbidden
       return
@@ -30,18 +43,16 @@ class QuestionsController < ApplicationController
 
     value = params[:negative].present? ? -1 : 1
 
-    Rate.transaction do
-      rate.destroy if rate.present?
-      rate = @question.rates.build(user: current_user, value: value)
+    rate = @question.rates.build(user: current_user, value: value)
 
-      respond_to do |format|
-        if rate.save
-          format.json { render json: {rating: @question.rating  } }
-        else
-          format.json { head :unprocessable_entity }
-        end
+    respond_to do |format|
+      if rate.save
+        format.json { render json: {rating: @question.rating, rate: current_user.rate_of(@question)    } }
+      else
+        format.json { head :unprocessable_entity }
       end
     end
+
   end
 
   def create

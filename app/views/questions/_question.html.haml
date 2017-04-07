@@ -21,7 +21,7 @@
     .col-12
       Your rate:
       .current-user-rate-question{ rate: "#{current_user.rate_of(@question)}" }= current_user.rate_of(@question)
-      = link_to 'Cancel rate', '', remote: true, class: 'btn btn-default btn-cancel-rate-question'
+      = link_to 'Cancel rate', question_cancel_rate_path(question), remote: true, class: 'btn btn-default btn-cancel-rate-question'
 
   .col-md-10
     %b= question.title

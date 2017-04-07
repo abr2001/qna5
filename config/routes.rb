@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     get :rate
+    get :cancel_rate
     resources :answers do
       get :set_best
     end
