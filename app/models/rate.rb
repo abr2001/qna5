@@ -1,8 +1,8 @@
 class Rate < ApplicationRecord
-  belongs_to :user
+  include HasUser
   belongs_to :ratable, polymorphic: true, optional: true
 
-  validates :user, :value, presence: true
+  validates :value, presence: true
   before_validation :check_user_already_has_rate
 
   private
