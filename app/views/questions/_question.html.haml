@@ -1,6 +1,6 @@
 .row
   .col-md-2.action-question
-    .rate-question-errors
+
     - if user_signed_in? && current_user.author_of?(@question)
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
       = link_to 'Edit', '', class: 'edit-question-link'
@@ -14,15 +14,8 @@
 
         = f.submit 'Update', class: "btn btn-primary"
 
-    - if user_signed_in? && !current_user.author_of?(@question)
-      = link_to '+', rate_question_path(question), remote: true, class: 'btn btn-success btn-rate-question'
-      .rating-question= question.rating
-      = link_to '-', rate_question_path(question, negative: true), remote: true, class: 'btn btn-danger btn-rate-question'
+    .rate-question= render 'shared/rate', item: @question
 
-      .col-12
-        Your rate:
-        .current-user-rate-question{ rate: "#{current_user.rate_of(@question)}" }= current_user.rate_of(@question)
-        = link_to 'Cancel rate', cancel_rate_question_path(question), remote: true, class: 'btn btn-default btn-cancel-rate-question'
 
   .col-md-10
     %b= question.title

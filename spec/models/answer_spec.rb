@@ -8,7 +8,7 @@ RSpec.describe Answer, type: :model do
     it { should have_many(:rates).dependent(:destroy) }
 
     it { should validate_presence_of :body }
-    it { should validate_presence_of :user }
+
 
     let!(:question) { create(:question) }
     let!(:answer)   { create(:answer, :with_user, question: question) }

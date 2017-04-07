@@ -1,0 +1,10 @@
+.rate-errors
+- if user_signed_in? && !current_user.author_of?(item)
+  = link_to '+', polymorphic_path([:rate, item]), remote: true, class: 'btn btn-success btn-rate', method: :patch
+  .rating= item.rating
+  = link_to '-', polymorphic_path([:rate, item], negative: true), remote: true, class: 'btn btn-danger btn-rate', method: :patch
+
+  .col-12
+    Your rate:
+    .current-user-rate{ rate: "#{current_user.rate_of(item)}" }= current_user.rate_of(item)
+    = link_to 'Cancel rate', polymorphic_path([:cancel_rate, item]), remote: true, class: 'btn btn-default btn-cancel-rate', method: :patch

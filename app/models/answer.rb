@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
-  include Associations
+  include HasAttachments
+  include HasRates
   include HasUser
   belongs_to :question
 

@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
-  include Associations
+  include HasAttachments
+  include HasRates
   include HasUser
 
   has_many :answers, dependent: :destroy
