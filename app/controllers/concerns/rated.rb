@@ -3,6 +3,7 @@ module Rated
 
   included do
     before_action :set_ratable, only: [:rate, :cancel_rate]
+    before_action :check_author, only: [:rate, :cancel_rate]
   end
 
   def rate
@@ -45,5 +46,11 @@ module Rated
     @ratable = model_klass.find(params[:id] || params[:question_id])
   end
 
+  def check_author
+    if current_user.author_of?(@ratable)
+      head :forbidden
+      return
+    end
+  end
 
 end

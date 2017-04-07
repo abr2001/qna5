@@ -1,8 +1,7 @@
 class QuestionsController < ApplicationController
   include Rated
   before_action :authenticate_user!, only: [:new, :create]
-  before_action :load_question, only: [:show, :destroy, :update, :rate, :cancel_rate]
-  before_action :check_user_can_rate, only: [:rate, :cancel_rate]
+  before_action :load_question, only: [:show, :destroy, :update]
 
   def index
     @questions = Question.all
@@ -53,13 +52,6 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id] || params[:question_id])
-  end
-
-  def check_user_can_rate
-    if current_user.author_of?(@question)
-      head :forbidden
-      return
-    end
   end
 
 end
