@@ -34,6 +34,15 @@ feature 'add rate to question', %q{
     within('.rating-question') do
       expect(page).to have_content '1'
     end
+    within('.rate-question-errors') do
+      expect(page).to have_content 'You already has rate'
+    end
+    within('.action-question') do
+      click_on 'Cancel rate'
+    end
+    within('.rating-question') do
+      expect(page).to have_content '0'
+    end
     within('.action-question') do
       click_on '-'
     end

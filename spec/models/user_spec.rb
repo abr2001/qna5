@@ -20,8 +20,4 @@ RSpec.describe User, type: :model do
     expect(user_not_author).to_not be_author_of(question)
   end
 
-  it 'User can not re-rate' do
-    expect(user_not_author).to_not be_author_of(question)
-  end
-
 end
