@@ -11,7 +11,14 @@ $ ->
   $('.btn-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
     $('.rating-question').html(response.rating)
+    $('.current-user-rate-question').html(response.rate)
+    $('.btn-cancel-rate-question').show();
 
   if $('.current-user-rate-question').attr("rate") == "0"
     $('.btn-cancel-rate-question').hide();
 
+  $('.btn-cancel-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
+    response = $.parseJSON(xhr.responseText)
+    $('.rating-question').html(response.rating)
+    $('.current-user-rate-question').html(response.rate)
+    $('.btn-cancel-rate-question').hide();
