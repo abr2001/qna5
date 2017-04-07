@@ -10,5 +10,7 @@ $ ->
     $('form#edit-answer-' + answer_id).show();
 
   $('.answers').children().each ->
-    console.log($(this));
+    if $(this).find('.current-user-rate-answer').attr("rate") == "0"
+      $(this).find('.btn-cancel-rate-answer').hide();
+
 
