@@ -11,9 +11,9 @@ module Rated
 
     respond_to do |format|
       if @rate.save
-        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable)    } }
+        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id } }
       else
-        format.json { render json: @rate.errors.full_messages, status: :unprocessable_entity }
+        format.json { render json: { errors: @rate.errors.full_messages, id: @ratable.id }, status: :unprocessable_entity }
       end
     end
   end
@@ -28,7 +28,7 @@ module Rated
 
     respond_to do |format|
       if rate.destroy
-        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable)  } }
+        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id } }
       else
         head :unprocessable_entity
       end

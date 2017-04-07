@@ -4,6 +4,7 @@
     .panel-body
       .row
         .col-md-2
+          .rate-answer-errors
           - if user_signed_in? && !current_user.author_of?(answer)
             = link_to '+', rate_question_answer_path(@question, answer), remote: true, class: 'btn btn-success btn-rate-answer'
             .rating-answer= answer.rating

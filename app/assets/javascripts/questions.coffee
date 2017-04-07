@@ -16,8 +16,8 @@ $ ->
     $('.rate-question-errors').html('');
 
   .bind 'ajax:error', (e, xhr, status, error) ->
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors, (index, value) ->
+    response = $.parseJSON(xhr.responseText)
+    $.each response.errors, (index, value) ->
       $('.rate-question-errors').html(value)
 
   if $('.current-user-rate-question').attr("rate") == "0"

@@ -14,3 +14,25 @@ $ ->
       $(this).find('.btn-cancel-rate-answer').hide();
 
 
+  $('.btn-rate-answer').bind 'ajax:success', (e, data, status, xhr) ->
+    response = $.parseJSON(xhr.responseText)
+    answer = $('#answer-' + response.id)
+    $(answer).find('.rating-answer').html(response.rating)
+    $(answer).find('.current-user-rate-answer').html(response.rate)
+    $(answer).find('.btn-cancel-rate-answer').show();
+    $(answer).find('.rate-answer-errors').html('');
+
+  .bind 'ajax:error', (e, xhr, status, error) ->
+    response = $.parseJSON(xhr.responseText)
+    $.each response.errors, (index, value) ->
+      answer = $('#answer-' + response.id)
+      $(answer).find('.rate-answer-errors').html(value)
+
+  $('.btn-cancel-rate-answer').bind 'ajax:success', (e, data, status, xhr) ->
+    response = $.parseJSON(xhr.responseText)
+    answer = $('#answer-' + response.id)
+    $(answer).find('.rating-answer').html(response.rating);
+    $(answer).find('.current-user-rate-answer').html(response.rate);
+    $(answer).find('.btn-cancel-rate-answer').hide();
+    $(answer).find('.rate-answer-errors').html('');
+
