@@ -12,6 +12,12 @@ class QuestionsController < ApplicationController
   end
 
   def rate
+    respond_to do |format|
+      format.json { render json: {rating: @question.rating  } }
+    end
+  end
+
+  def rate2
     if current_user.author_of?(@question)
       head :forbidden
       return
@@ -30,7 +36,7 @@ class QuestionsController < ApplicationController
 
       respond_to do |format|
         if rate.save
-          format.json { render json: @question.rating }
+          format.json { render json: {rating: @question.rating  } }
         else
           format.json { head :unprocessable_entity }
         end

@@ -9,9 +9,8 @@ $ ->
     $('.edit_question').show();
 
   $('.btn-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
-    $('.rating-question').html(xhr.responseText)
-
-
+    response = $.parseJSON(xhr.responseText)
+    $('.rating-question').html(response.rating)
 
   if $('.current-user-rate-question').attr("rate") == "0"
     $('.btn-cancel-rate-question').hide();
