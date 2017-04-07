@@ -1,0 +1,39 @@
+                     Prefix Verb   URI Pattern                                                   Controller#Action
+           new_user_session GET    /users/sign_in(.:format)                                      devise/sessions#new
+               user_session POST   /users/sign_in(.:format)                                      devise/sessions#create
+       destroy_user_session DELETE /users/sign_out(.:format)                                     devise/sessions#destroy
+          new_user_password GET    /users/password/new(.:format)                                 devise/passwords#new
+         edit_user_password GET    /users/password/edit(.:format)                                devise/passwords#edit
+              user_password PATCH  /users/password(.:format)                                     devise/passwords#update
+                            PUT    /users/password(.:format)                                     devise/passwords#update
+                            POST   /users/password(.:format)                                     devise/passwords#create
+   cancel_user_registration GET    /users/cancel(.:format)                                       devise/registrations#cancel
+      new_user_registration GET    /users/sign_up(.:format)                                      devise/registrations#new
+     edit_user_registration GET    /users/edit(.:format)                                         devise/registrations#edit
+          user_registration PATCH  /users(.:format)                                              devise/registrations#update
+                            PUT    /users(.:format)                                              devise/registrations#update
+                            DELETE /users(.:format)                                              devise/registrations#destroy
+                            POST   /users(.:format)                                              devise/registrations#create
+                       root GET    /                                                             questions#index
+   question_answer_set_best GET    /questions/:question_id/answers/:answer_id/set_best(.:format) answers#set_best
+       rate_question_answer GET    /questions/:question_id/answers/:id/rate(.:format)            answers#rate
+cancel_rate_question_answer GET    /questions/:question_id/answers/:id/cancel_rate(.:format)     answers#cancel_rate
+           question_answers GET    /questions/:question_id/answers(.:format)                     answers#index
+                            POST   /questions/:question_id/answers(.:format)                     answers#create
+        new_question_answer GET    /questions/:question_id/answers/new(.:format)                 answers#new
+       edit_question_answer GET    /questions/:question_id/answers/:id/edit(.:format)            answers#edit
+            question_answer GET    /questions/:question_id/answers/:id(.:format)                 answers#show
+                            PATCH  /questions/:question_id/answers/:id(.:format)                 answers#update
+                            PUT    /questions/:question_id/answers/:id(.:format)                 answers#update
+                            DELETE /questions/:question_id/answers/:id(.:format)                 answers#destroy
+              rate_question GET    /questions/:id/rate(.:format)                                 questions#rate
+       cancel_rate_question GET    /questions/:id/cancel_rate(.:format)                          questions#cancel_rate
+                  questions GET    /questions(.:format)                                          questions#index
+                            POST   /questions(.:format)                                          questions#create
+               new_question GET    /questions/new(.:format)                                      questions#new
+              edit_question GET    /questions/:id/edit(.:format)                                 questions#edit
+                   question GET    /questions/:id(.:format)                                      questions#show
+                            PATCH  /questions/:id(.:format)                                      questions#update
+                            PUT    /questions/:id(.:format)                                      questions#update
+                            DELETE /questions/:id(.:format)                                      questions#destroy
+                 attachment DELETE /attachments/:id(.:format)                                    attachments#destroy
