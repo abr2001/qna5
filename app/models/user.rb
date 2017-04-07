@@ -11,4 +11,13 @@ class User < ApplicationRecord
     id == item.user_id
   end
 
+  def already_has_rate_of?(item)
+    item.rates.where(user_id: id).exists?
+  end
+
+  def rate_of(item)
+    rate = item.rates.where(user_id: id).first
+    rate.nil? ? 0 : rate.value
+  end
+
 end
