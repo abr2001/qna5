@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update, :rate, :cancel_rate]
   before_action :check_user_can_rate, only: [:rate, :cancel_rate]
@@ -11,34 +12,6 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def cancel_rate
-    unless current_user.already_has_rate_of?(@question)
-      head :forbidden
-      return
-    end
-
-    rate = @question.rates.where(user_id: current_user).first
-
-    respond_to do |format|
-      if rate.destroy
-        format.json { render json: {rating: @question.rating, rate: current_user.rate_of(@question)  } }
-      else
-        head :unprocessable_entity
-      end
-    end
-  end
-
-  def rate
-    @rate = @question.rates.build(user: current_user, value: params[:negative].present? ? -1 : 1)
-
-    respond_to do |format|
-      if @rate.save
-        format.json { render json: {rating: @question.rating, rate: current_user.rate_of(@question)    } }
-      else
-        format.json { render json: @rate.errors.full_messages, status: :unprocessable_entity }
-      end
-    end
-  end
 
   def create
     @question = Question.new(quesion_params)

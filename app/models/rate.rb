@@ -9,8 +9,8 @@ class Rate < ApplicationRecord
 
   def check_user_already_has_rate
     if Rate.where(user_id: user_id).
-      where(ratable_id: ratable_id).
-      where(ratable_type: ratable_type).exists?
+        where(ratable_id: ratable_id).
+        where(ratable_type: ratable_type).exists?
       errors.add(:base, 'You already has rate')
     end
   end
