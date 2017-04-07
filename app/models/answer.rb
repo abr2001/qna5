@@ -1,14 +1,10 @@
 class Answer < ApplicationRecord
+  include Associations
   belongs_to :question
   belongs_to :user
-  has_many :attachments, as: :attachable, dependent: :destroy
-  has_many :rates, as: :ratable, dependent: :destroy
 
   validates :body, :user, presence: true
   validate :best_only_one
-
-  accepts_nested_attributes_for :attachments, reject_if: :all_blank
-
 
   def set_best
     Answer.transaction do
