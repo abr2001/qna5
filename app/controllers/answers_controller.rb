@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_answer, only: [:destroy, :update, :set_best]
   before_action :load_question, only: [:update, :set_best, :create]

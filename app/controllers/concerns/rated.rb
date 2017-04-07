@@ -43,7 +43,7 @@ module Rated
   end
 
   def set_ratable
-    @ratable = model_klass.find(params[:id] || params[:question_id])
+    @ratable = model_klass.find(params[:id])
   end
 
   def check_author
