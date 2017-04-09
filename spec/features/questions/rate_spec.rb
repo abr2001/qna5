@@ -32,6 +32,7 @@ feature 'add rate to question', %q{
         within('.rating') do
           expect(page).to have_content '1'
         end
+        expect(page).to have_link 'Cancel rate'
       end
     end
 
@@ -70,9 +71,5 @@ feature 'add rate to question', %q{
         end
       end
     end
-
   end
-
-
-
 end
