@@ -136,4 +136,33 @@ RSpec.describe QuestionsController, type: :controller do
 
   end
 
+  describe 'PATCH #rate' do
+    context 'author try rate question' do
+      before { post :rate, format: :js, params: { id: question } }
+      it 'not rate for question in the database' do
+        expect(question.rating).to eq 0
+      end
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+    let!(:question_2) { create(:question) }
+    context 'not author positive rate question' do
+      before { post :rate, format: :js, params: { id: question_2 } }
+      it 'add rate for question in the database' do
+        expect(question_2.rating).to eq 1
+      end
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(response.body).to include question_2.rating.to_s }
+    end
+    context 'not author negative rate question' do
+      before { post :rate, format: :js, params: { id: question_2, negative: true } }
+      it 'add rate for question in the database' do
+        expect(question_2.rating).to eq -1
+      end
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(response.body).to include question_2.rating.to_s }
+    end
+
+  end
+
+
 end
