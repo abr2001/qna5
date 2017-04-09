@@ -1,20 +1,11 @@
-.answer{id: "answer-#{answer.id}"}
+.answer{id: "answer-#{answer.id}" }
   .panel.panel-primary
     .panel-heading= answer.best ? "Best answer" : "answer"
     .panel-body
       .row
         .col-md-2
 
-          .rate-answer-errors
-          - if user_signed_in? && !current_user.author_of?(answer)
-            = link_to '+', polymorphic_path([:rate, answer]), remote: true, class: 'btn btn-success btn-rate-answer', method: :patch
-            .rating-answer= answer.rating
-            = link_to '-', polymorphic_path([:rate, answer], negative: true), remote: true, class: 'btn btn-danger btn-rate-answer', method: :patch
-
-            .col-12
-              Your rate:
-              .current-user-rate-answer{ rate: "#{current_user.rate_of(answer)}" }= current_user.rate_of(answer)
-              = link_to 'Cancel rate', polymorphic_path([:cancel_rate, answer]), remote: true, class: 'btn btn-default btn-cancel-rate-answer', method: :patch
+          = render 'shared/rate', item: answer
 
         .col-md-10
           = answer.body.html_safe
