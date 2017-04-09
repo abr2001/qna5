@@ -24,17 +24,17 @@ feature 'add rate to question', %q{
     visit question_path(question.id)
     within('.action-question') do
       click_on '+'
+      within('.rating') do
+        expect(page).to have_content '1'
+      end
     end
-    within('.rating-question') do
-      expect(page).to have_content '1'
-    end
-    within('.action-question') do
+    within('.action') do
       click_on '+'
     end
-    within('.rating-question') do
+    within('.rating') do
       expect(page).to have_content '1'
     end
-    within('.rate-question-errors') do
+    within('.rate-errors') do
       expect(page).to have_content 'You already has rate'
     end
     within('.action-question') do

@@ -14,7 +14,8 @@
 
         = f.submit 'Update', class: "btn btn-primary"
 
-    = render 'shared/rate', item: @question
+    .rate-question= render 'shared/rate', item: @question
+
 
   .col-md-10
     %b= question.title

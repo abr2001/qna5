@@ -13,7 +13,6 @@ $ ->
     if $(this).find('.current-user-rate').attr("rate") == "0"
       $(this).find('.btn-cancel-rate').hide();
 
-
   $('.btn-rate').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
     answer = $('#answer-' + response.id)
