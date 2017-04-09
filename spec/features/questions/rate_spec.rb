@@ -19,37 +19,60 @@ feature 'add rate to question', %q{
     end
   end
 
-  scenario 'The user rate for the question', js: true do
-    login_another_user
-    visit question_path(question.id)
-    within('.action-question') do
-      click_on '+'
-      within('.rating') do
-        expect(page).to have_content '1'
+  context 'not auhtor of question' do
+
+    before {
+      login_another_user
+      visit question_path(question.id)
+      }
+
+    scenario 'The user rate for the question', js: true do
+      within('.action-question') do
+        click_on '+'
+        within('.rating') do
+          expect(page).to have_content '1'
+        end
       end
     end
-    within('.action') do
-      click_on '+'
+
+
+    scenario 'The user can not re-rate for the question', js: true do
+      within('.rate-question') do
+        click_on '+'
+        within('.rating') do
+          expect(page).to have_content '1'
+        end
+        click_on '+'
+        within('.rate-errors') do
+          expect(page).to have_content 'You already has rate'
+        end
+      end
     end
-    within('.rating') do
-      expect(page).to have_content '1'
+
+    scenario 'The user negative rate for the question', js: true do
+      within('.rate-question') do
+        click_on '-'
+        within('.rating') do
+          expect(page).to have_content '-1'
+        end
+      end
     end
-    within('.rate-errors') do
-      expect(page).to have_content 'You already has rate'
+
+    scenario 'The user can cancel rate for the question', js: true do
+      within('.rate-question') do
+        click_on '-'
+        within('.rating') do
+          expect(page).to have_content '-1'
+        end
+        click_on 'Cancel rate'
+        within('.rating') do
+          expect(page).to have_content '0'
+        end
+      end
     end
-    within('.action-question') do
-      click_on 'Cancel rate'
-    end
-    within('.rating-question') do
-      expect(page).to have_content '0'
-    end
-    within('.action-question') do
-      click_on '-'
-    end
-    within('.rating-question') do
-      expect(page).to have_content '-1'
-    end
+
   end
+
 
 
 end
