@@ -24,12 +24,10 @@ module Rated
 
     rate = @ratable.rates.where(user_id: current_user).first
 
-    respond_to do |format|
-      if rate.destroy
-        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id } }
-      else
-        head :unprocessable_entity
-      end
+    if rate.destroy
+      render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id }
+    else
+      head :unprocessable_entity
     end
   end
 
