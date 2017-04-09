@@ -8,24 +8,24 @@ $ ->
     $(this).hide();
     $('.edit_question').show();
 
-  $('.btn-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
+  $('.btn-rate').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
-    $('.rating-question').html(response.rating)
-    $('.current-user-rate-question').html(response.rate)
-    $('.btn-cancel-rate-question').show();
-    $('.rate-question-errors').html('');
+    $('.rating').html(response.rating)
+    $('.current-user-rate').html(response.rate)
+    $('.btn-cancel-rate').show();
+    $('.rate-errors').html('');
 
   .bind 'ajax:error', (e, xhr, status, error) ->
     response = $.parseJSON(xhr.responseText)
     $.each response.errors, (index, value) ->
-      $('.rate-question-errors').html(value)
+      $('.rate-errors').html(value)
 
-  if $('.current-user-rate-question').attr("rate") == "0"
-    $('.btn-cancel-rate-question').hide();
+  if $('.current-user-rate').attr("rate") == "0"
+    $('.btn-cancel-rate').hide();
 
-  $('.btn-cancel-rate-question').bind 'ajax:success', (e, data, status, xhr) ->
+  $('.btn-cancel-rate').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
-    $('.rating-question').html(response.rating);
-    $('.current-user-rate-question').html(response.rate);
-    $('.btn-cancel-rate-question').hide();
-    $('.rate-question-errors').html('');
+    $('.rating').html(response.rating);
+    $('.current-user-rate').html(response.rate);
+    $('.btn-cancel-rate').hide();
+    $('.rate-errors').html('');
