@@ -6,18 +6,18 @@
         .col-md-2
           .rate-answer-errors
           - if user_signed_in? && !current_user.author_of?(answer)
-            = link_to '+', rate_question_answer_path(@question, answer), remote: true, class: 'btn btn-success btn-rate-answer'
+            = link_to '+', rate_question_answer_path(@question, answer), remote: true, class: 'btn btn-success btn-rate-answer', method: :patch
             .rating-answer= answer.rating
-            = link_to '-', rate_question_answer_path(@question, answer, negative: true), remote: true, class: 'btn btn-danger btn-rate-answer'
+            = link_to '-', rate_question_answer_path(@question, answer, negative: true), remote: true, class: 'btn btn-danger btn-rate-answer', method: :patch
 
             .col-12
               Your rate:
               .current-user-rate-answer{ rate: "#{current_user.rate_of(answer)}" }= current_user.rate_of(answer)
-              = link_to 'Cancel rate', cancel_rate_question_answer_path(@question, answer), remote: true, class: 'btn btn-default btn-cancel-rate-answer'
+              = link_to 'Cancel rate', cancel_rate_question_answer_path(@question, answer), remote: true, class: 'btn btn-default btn-cancel-rate-answer', method: :patch
         .col-md-10
           = answer.body.html_safe
           - if user_signed_in? && current_user.author_of?(@question) && !answer.best
-            = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true
+            = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
           - if user_signed_in? && current_user.author_of?(answer)
             = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true

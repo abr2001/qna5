@@ -4,14 +4,14 @@ Rails.application.routes.draw do
 
   concern :rated do
     member do
-      get :rate
-      get :cancel_rate
+      patch :rate
+      patch :cancel_rate
     end
   end
 
   resources :questions, concerns: [:rated] do
     resources :answers, concerns: [:rated] do
-      get :set_best
+      patch :set_best
     end
   end
 
