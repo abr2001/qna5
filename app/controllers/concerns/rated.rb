@@ -9,17 +9,15 @@ module Rated
   def rate
     @rate = @ratable.rates.build(user: current_user, value: params[:negative].present? ? -1 : 1)
 
-    respond_to do |format|
-      if @rate.save
-        format.json { render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id } }
-      else
-        format.json { render json: { errors: @rate.errors.full_messages, id: @ratable.id }, status: :unprocessable_entity }
-      end
+    if @rate.save
+      render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id }
+    else
+      render json: { errors: @rate.errors.full_messages, id: @ratable.id }, status: :unprocessable_entity
     end
   end
 
   def cancel_rate
-    unless current_user.already_has_rate_of?(@ratable)
+    unless current_user.has_rate?(@ratable)
       head :forbidden
       return
     end
