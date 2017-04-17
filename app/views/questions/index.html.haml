@@ -1,6 +1,6 @@
-- @questions.each do |question|
-  .well
-    = link_to question.title, question
+.questions-list
+  - @questions.each do |question|
+    = render 'row_question', question: question
 
 = link_to 'Add question', new_question_path, class: 'btn btn-default'
 
