@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
+  include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update]
-
 
   def index
     @questions = Question.all
@@ -9,8 +9,8 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-    #@question.attachments.build
   end
+
 
   def create
     @question = Question.new(quesion_params)
@@ -24,7 +24,6 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    #@answer.attachments.build
   end
 
   def destroy
@@ -52,7 +51,7 @@ class QuestionsController < ApplicationController
   end
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.find(params[:id] || params[:question_id])
   end
 
 end

@@ -5,9 +5,19 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   has_many :answers
   has_many :questions
+  has_many :rates
 
   def author_of?(item)
     id == item.user_id
+  end
+
+  def has_rate?(item)
+    item.rates.where(user_id: id).exists?
+  end
+
+  def rate_of(item)
+    rate = item.rates.where(user_id: id).first
+    rate.nil? ? 0 : rate.value
   end
 
 end

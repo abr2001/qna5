@@ -1,15 +1,22 @@
-%b= question.title
-%p= question.body.html_safe
-.action-question
-  - if user_signed_in? && current_user.author_of?(@question)
-    = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
-    = link_to 'Edit', '', class: 'edit-question-link'
-    = form_for @question, remote: true do |f|
-      = f.label :title
-      = f.text_field :title, class: "form-control"
+.row
+  .col-md-2.action-question
 
-      = f.label :body, 'Text'
-      = f.text_area :body, class: "form-control"
+    - if user_signed_in? && current_user.author_of?(@question)
+      = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to 'Edit', '', class: 'edit-question-link'
 
-      = f.submit 'Update', class: "btn btn-primary"
+      = form_for @question, remote: true do |f|
+        = f.label :title
+        = f.text_field :title, class: "form-control"
 
+        = f.label :body, 'Text'
+        = f.text_area :body, class: "form-control"
+
+        = f.submit 'Update', class: "btn btn-primary"
+
+    .rate-question= render 'shared/rate', item: @question
+
+
+  .col-md-10
+    %b= question.title
+    %p= question.body.html_safe
