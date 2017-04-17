@@ -1,5 +1,4 @@
-.well
-  .question= render @question
+.well.question= render @question, show_action: show_action?(@question)
 
 Count of answers:
 = @question.answers.count
@@ -10,7 +9,7 @@ Count of answers:
     .attachment{id: "attachment-#{attachment.id}"}
       %li
         = link_to attachment.file.identifier, attachment.file.url
-        - if user_signed_in? && current_user.author_of?(@question) && attachment.persisted?
+        - if show_action?(@question) && attachment.persisted?
           .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 .answers

@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update]
+  after_action :publish_question, only: [:create]
 
   def index
     @questions = Question.all
@@ -52,6 +53,19 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id] || params[:question_id])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      "questions",
+      {
+        question: ApplicationController.render(
+          locals: { question: @question },
+          partial: 'questions/row_question'
+        )
+      }
+    )
   end
 
 end

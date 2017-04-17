@@ -9,10 +9,10 @@
 
         .col-md-10
           = answer.body.html_safe
-          - if user_signed_in? && current_user.author_of?(@question) && !answer.best
+          - if show_action?(@question) && !answer.best
             = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
-          - if user_signed_in? && current_user.author_of?(answer)
+          - if show_action?(answer)
             = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
@@ -22,7 +22,7 @@
         - answer.attachments.each do |attachment|
           .attachment{id: "attachment-#{attachment.id}"}
             %li= link_to attachment.file.identifier, attachment.file.url
-            - if user_signed_in? && current_user.author_of?(answer) && attachment.persisted?
+            - if show_action?(answer) && attachment.persisted?
               .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 

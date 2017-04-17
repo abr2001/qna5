@@ -1,7 +1,7 @@
 .row
   .col-md-2.action-question
 
-    - if user_signed_in? && current_user.author_of?(@question)
+    - if show_action
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
       = link_to 'Edit', '', class: 'edit-question-link'
 

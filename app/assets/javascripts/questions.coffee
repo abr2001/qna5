@@ -2,6 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+questionsList = $(".questions-list")
+
 $ ->
   $('.edit-question-link').click (e) ->
     e.preventDefault();
@@ -29,3 +31,16 @@ $ ->
     $('.rate-question').find('.current-user-rate').html(response.rate);
     $('.rate-question').find('.btn-cancel-rate').hide();
     $('.rate-question').find('.rate-errors').html('');
+
+  App.cable.subscriptions.create "QuestionsChannel", {
+    connected: ->
+      @follow()
+
+    follow: ->
+      @perform 'follow'
+
+    received: (data) ->
+      questionsList.empty() unless questionsList.find('.collection-item').length
+      questionsList.append data['question']
+  }
+
