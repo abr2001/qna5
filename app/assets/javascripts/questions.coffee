@@ -2,8 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-questionsList = $(".questions-list")
-
 $ ->
   $('.edit-question-link').click (e) ->
     e.preventDefault();
@@ -40,7 +38,6 @@ $ ->
       @perform 'follow'
 
     received: (data) ->
-      questionsList.empty() unless questionsList.find('.collection-item').length
-      questionsList.append data['question']
+      $(".questions-list").append data['question']
   }
 
