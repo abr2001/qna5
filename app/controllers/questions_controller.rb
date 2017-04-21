@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
-    gon.variable_name = @questions.to_json
   end
 
   def new
@@ -54,6 +53,7 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id] || params[:question_id])
+    gon.question_id = @question.id
   end
 
   def publish_question
