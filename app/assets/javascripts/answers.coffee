@@ -35,3 +35,14 @@ $ ->
     $(answer).find('.btn-cancel-rate').hide();
     $(answer).find('.rate-errors').html('');
 
+  App.cable.subscriptions.create "AnswersChannel", {
+    connected: ->
+      @follow()
+
+    follow: ->
+      return unless gon.question_id
+      @perform 'follow', id: gon.question_id
+
+    received: (data) ->
+      appendAnswer(data)
+  }
