@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.all
+    gon.variable_name = @questions.to_json
   end
 
   def new

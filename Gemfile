@@ -42,6 +42,8 @@ gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'nested_form'
+gem 'skim'
+gem 'gon'
 
 group :test do
   gem 'rspec-rails'
