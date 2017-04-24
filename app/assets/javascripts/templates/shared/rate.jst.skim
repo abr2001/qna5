@@ -1,0 +1,4 @@
+
+.rate-errors
+- if gon.user_id && gon.user_id != @item.user_id
+  a.btn.btn-success.btn-rate data-remote="true" data-method="patch" href='' +

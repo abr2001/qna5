@@ -4,5 +4,6 @@
     .panel-body
       .row
         .col-md-2
+          == App.utils.render('shared/rate', item: @)
         .col-md-10
           = @body
