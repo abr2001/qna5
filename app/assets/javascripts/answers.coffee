@@ -35,6 +35,11 @@ $ ->
     $(answer).find('.btn-cancel-rate').hide();
     $(answer).find('.rate-errors').html('');
 
+
+  appendAnswer = (data) ->
+    return if $("#answer-#{data.id}")[0]?
+    $(".answers").append JST["templates/answer"](data)
+
   App.cable.subscriptions.create "AnswersChannel", {
     connected: ->
       @follow()
