@@ -2,6 +2,8 @@ class Answer < ApplicationRecord
   include HasAttachments
   include HasRates
   include HasUser
+  include HasComments
+
   belongs_to :question
 
   validates :body, presence: true
