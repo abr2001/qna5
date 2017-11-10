@@ -163,6 +163,16 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #comment' do
+    let!(:comment_body) { 'test comment' }
+    before { post :comment, format: :js, params: { id: question, body: comment_body } }
+    it { expect(question.comments.count).to eq 1 }
+    it { expect(question.comments.last.body).to eq comment_body }
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(response.body).to include comment_body }
+  end
+
+
   describe 'PATCH #cancel_rate' do
     let!(:question_2) { create(:question) }
     let!(:rate) { create(:rate, ratable: question_2, user: @user) }
