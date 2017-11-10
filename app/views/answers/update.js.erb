@@ -2,15 +2,17 @@ $('.errors').html('');
 
 <% if @answer.valid? %>
   $('#answer-<%= @answer.id %>').html("<%= j render @answer %>");
-    $('.edit-answer-link').click(function(e) {
-      e.preventDefault();
-      $(this).hide();
-      answer_id = $(this).data('answerId');
-      $('form#edit-answer-' + answer_id).show();
+  $('.edit-answer-link').click(function(e) {
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId');
+    $('form#edit-answer-' + answer_id).show();
+  });
+  $('.add-answer-comment-link').click(function(e) {
+    e.preventDefault();
+    $(this).hide();
+    $('.comment-answer').show();
   });
 <%else%>
   $('#answer-<%= @answer.id %>').append("<%= j render 'shared/error_message', item: @answer %>");
 <%end%>
-
-$('#answer_body').val('');
-

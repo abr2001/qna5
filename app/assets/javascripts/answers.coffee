@@ -3,6 +3,11 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  $('.add-answer-comment-link').click (e) ->
+    e.preventDefault();
+    $(this).hide();
+    $('.comment-answer').show();
+
   $('.edit-answer-link').click (e) ->
     e.preventDefault();
     $(this).hide();

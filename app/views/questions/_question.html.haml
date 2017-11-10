@@ -18,8 +18,11 @@
   %b= question.title
   %p= question.body.html_safe
 
+  .list-comment-question
+    = render 'shared/comments', item: @question
+
   .comment-question
     = form_tag polymorphic_path([:comment, @question]), method: :patch, remote: :true do
-      = text_area_tag :body, nil, required: true, class: "form-control"
+      = text_area_tag :body, nil, required: true, class: "form-control comment-body"
       = submit_tag 'Send comment', class: "btn btn-info"
   = link_to 'Add comment', '', class: 'add-comment-link'

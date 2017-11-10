@@ -6,13 +6,7 @@ module Commented
   end
 
   def comment
-    @comment = @commentable.comments.build(user: current_user, body: params[:body])
-
-    if @comment.save
-      render json: { comment: @comment }
-    else
-      render json: { errors: @comment.errors.full_messages, id: @comment.id }, status: :unprocessable_entity
-    end
+    @comment = @commentable.comments.create(user: current_user, body: params[:body])
   end
 
   private
