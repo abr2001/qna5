@@ -1,0 +1,4 @@
+- item.comments.order(id: :asc).each do |comment|
+  .small
+    = "#{comment.user.email}: "
+    = comment.body

@@ -33,3 +33,12 @@
             = f.text_area :body, class: "form-control"
             = f.submit 'Update', class: "btn btn-primary"
 
+    .list-comment-answer
+      = render 'shared/comments', item: answer
+
+    .comment-answer
+      = form_tag polymorphic_path([:comment, answer]), method: :patch, remote: :true do
+        = text_area_tag :body, nil, required: true, class: "form-control answer-comment-body"
+        = submit_tag 'Send comment', class: "btn btn-info"
+    = link_to 'Add comment', '', class: 'add-answer-comment-link'
+
