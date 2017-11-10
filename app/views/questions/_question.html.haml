@@ -1,7 +1,6 @@
 .row
-  .col-md-2.action-question
-
-    - if show_action
+  .action-question
+    - if show_action?(@question)
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
       = link_to 'Edit', '', class: 'edit-question-link'
 
@@ -16,7 +15,11 @@
 
     .rate-question= render 'shared/rate', item: @question
 
+  %b= question.title
+  %p= question.body.html_safe
 
-  .col-md-10
-    %b= question.title
-    %p= question.body.html_safe
+  .comment-question
+    = form_tag polymorphic_path([:comment, @question]), method: :patch, remote: :true do
+      = text_area_tag :body, nil, required: true, class: "form-control"
+      = submit_tag 'Send comment', class: "btn btn-info"
+  = link_to 'Add comment', '', class: 'add-comment-link'
