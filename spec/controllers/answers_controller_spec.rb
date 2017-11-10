@@ -99,4 +99,12 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #comment' do
+    let!(:comment_body) { 'test comment' }
+    before { post :comment, format: :js, params: { id: answer, body: comment_body } }
+    it { expect(answer.comments.count).to eq 1 }
+    it { expect(answer.comments.last.body).to eq comment_body }
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(response.body).to include comment_body }
+  end
 end
