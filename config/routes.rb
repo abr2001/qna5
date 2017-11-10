@@ -9,13 +9,19 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: [:rated] do
+  concern :commented do
+    member do
+      patch :comment
+    end
+  end
+
+  resources :questions, concerns: [:rated], concerns: [:commented] do
     resources :answers do
       patch :set_best
     end
   end
 
-  resources :answers, concerns: [:rated], only: [:rate, :cancel_rate]
+  resources :answers, concerns: [:rated], only: [:rate, :cancel_rate], concerns: [:commented]
 
   resources :attachments, only: :destroy
 
