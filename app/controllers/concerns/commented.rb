@@ -3,6 +3,7 @@ module Commented
 
   included do
     before_action :set_commentable, only: [:comment]
+    after_action :publish_comment, only: [:comment]
   end
 
   def comment
@@ -21,7 +22,18 @@ module Commented
 
   def publish_comment
     return if @comment.errors.any?
-    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer
+    ActionCable.server.broadcast(
+      "comments",
+      {
+        comment: JSON.parse(@comment.to_json),
+        html: ApplicationController.render(
+          locals: { item: @commentable },
+          partial: 'shared/comments'
+        )
+      }
+    )
   end
+
+
 
 end
