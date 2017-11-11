@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: [:create]
 
   def create
+    byebug
     @answer = @question.answers.create(answer_params.merge(user: current_user))
   end
 

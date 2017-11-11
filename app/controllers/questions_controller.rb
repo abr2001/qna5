@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   def index
-    @questions = Question.includes(:user).all.order(id: :desc)
+    @questions = params[:only_me] ? current_user.questions.list : Question.list
   end
 
   def new

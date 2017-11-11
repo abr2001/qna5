@@ -11,7 +11,7 @@ feature 'Create question', %q{
   scenario 'User create the question' do
     login_user
     visit questions_path
-    click_on 'Add question'
+    click_on 'New question'
     fill_in 'Title', with: 'Test question'
     fill_in 'Text', with: 'text text text'
     click_on 'Save'
@@ -23,7 +23,7 @@ feature 'Create question', %q{
   scenario 'user enters invalid data' do
     login_user
     visit questions_path
-    click_on 'Add question'
+    click_on 'New question'
     fill_in 'Title', with: ''
     fill_in 'Text', with: ''
     click_on 'Save'
@@ -33,7 +33,7 @@ feature 'Create question', %q{
 
   scenario 'a non-authenticated user tries create question' do
     visit questions_path
-    click_on 'Add question'
+    click_on 'New question'
     expect(page).to have_content 'You need to sign in or sign up before continuing'
   end
 
