@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   def index
-    @questions = Question.all.order(id: :desc)
+    @questions = Question.includes(:user).all.order(id: :desc)
   end
 
   def new
