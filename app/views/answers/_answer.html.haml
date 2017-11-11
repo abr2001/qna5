@@ -1,6 +1,8 @@
 .answer{id: "answer-#{answer.id}" }
   .panel.panel-primary
-    .panel-heading= answer.best ? "Best answer" : "answer"
+    .panel-heading
+      = answer.best ? "Best answer" : "answer"
+      = answer.user.email
     .panel-body
       .row
         .col-md-2
@@ -33,12 +35,13 @@
             = f.text_area :body, class: "form-control"
             = f.submit 'Update', class: "btn btn-primary"
 
-    .list-comment-answer
+    .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
       = render 'shared/comments', item: answer
 
-    .comment-answer
-      = form_tag polymorphic_path([:comment, answer]), method: :patch, remote: :true do
-        = text_area_tag :body, nil, required: true, class: "form-control answer-comment-body"
-        = submit_tag 'Send comment', class: "btn btn-info"
-    = link_to 'Add comment', '', class: 'add-answer-comment-link'
+    = form_tag polymorphic_path([:comment, answer]), method: :patch, remote: :true, id: "comment-answer-#{answer.id}", class: "comment-answer" do
+      = text_area_tag :body, nil, required: true, class: "form-control answer-comment-body"
+      = submit_tag 'Send comment', class: "btn btn-info"
+      = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
+    = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }
+
 

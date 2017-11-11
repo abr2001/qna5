@@ -1,7 +1,7 @@
 $('.errors').html('');
 
 <% if @comment.valid? %>
-  $('.list-comment-answer').html("<%= j render 'shared/comments', item: @commentable%>");
+  $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'shared/comments', item: @commentable%>");
   $('.answer-comment-body').val('');
   $('.add-answer-comment-link').show();
   $('.comment-answer').hide();

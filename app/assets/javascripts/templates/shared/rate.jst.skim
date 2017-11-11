@@ -1,4 +1,6 @@
 
 .rate-errors
 - if gon.user_id && gon.user_id != @item.user_id
-  a.btn.btn-success.btn-rate data-remote="true" data-method="patch" href='' +
+  a.btn.btn-success.btn-rate data-remote="true" data-method="patch" href="/answers/#{@item.id}/rate" rel="nofollow" +
+  .rating 0
+  a.btn.btn-danger.btn-rate data-remote="true" data-method="patch" href="/answers/#{@item.id}/rate?negative=true" rel="nofollow" -
