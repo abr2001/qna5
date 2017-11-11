@@ -1,5 +1,6 @@
 .row
   .action-question
+    %p=question.user.email
     - if show_action?(@question)
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
       = link_to 'Edit', '', class: 'edit-question-link'

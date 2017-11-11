@@ -18,4 +18,10 @@ module Commented
   def set_commentable
     @commentable = model_klass.find(params[:id])
   end
+
+  def publish_comment
+    return if @comment.errors.any?
+    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer
+  end
+
 end
