@@ -15,7 +15,7 @@
             = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
           - if show_action?(answer)
-            = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+            = link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
 
@@ -29,16 +29,16 @@
 
 
 
-        = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
+        = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
           .well
             = f.label :body, 'Answer'
             = f.text_area :body, class: "form-control"
             = f.submit 'Update', class: "btn btn-primary"
 
     .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
-      = render 'shared/comments', item: answer
+      = render 'shared/comments', commentable: answer
 
-    = form_tag polymorphic_path([:comment, answer]), method: :patch, remote: :true, id: "comment-answer-#{answer.id}", class: "comment-answer" do
+    = form_tag answer_comments_path(answer), method: :patch, remote: :true, id: "comment-answer-#{answer.id}", class: "comment-answer" do
       = text_area_tag :body, nil, required: true, class: "form-control answer-comment-body"
       = submit_tag 'Send comment', class: "btn btn-info"
       = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }

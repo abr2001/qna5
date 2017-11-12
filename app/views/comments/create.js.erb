@@ -1,0 +1,16 @@
+$('.errors').html('');
+
+<% if @comment.valid? %>
+  $('.list-comment-question').html("<%= j render 'shared/comments', commentable: @commentable%>");
+  $('.comment-body').val('');
+  $('.add-comment-link').show();
+  $('.comment-question').hide();
+  $('.add-comment-link').click(function(e) {
+    e.preventDefault();
+    $(this).hide();
+    $('.comment-question').show();
+  });
+
+<%else%>
+  $('.question').append("<%= j render 'shared/error_message', item: @comment %>");
+<%end%>

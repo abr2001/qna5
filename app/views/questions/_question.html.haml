@@ -20,11 +20,11 @@
   %p= question.body.html_safe
 
   .list-comment-question
-    = render 'shared/comments', item: @question
+    = render 'shared/comments', commentable: @question
 
   .comment-question
-    = form_tag polymorphic_path([:comment, @question]), method: :patch, remote: :true do
-      = text_area_tag :body, nil, required: true, class: "form-control comment-body"
-      = submit_tag 'Send comment', class: "btn btn-info"
+    = form_for [@question, @comment], remote: :true do |f|
+      = f.text_area :body, required: true, class: "form-control comment-body"
+      = f.submit 'Send comment', class: "btn btn-info"
       = link_to 'Cancel', '', class: 'cancel-question-comment-link'
   = link_to 'Add comment', '', class: 'add-comment-link'
