@@ -1,6 +1,5 @@
 class QuestionsController < ApplicationController
   include Rated
-  include Commented
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update]
   after_action :publish_question, only: [:create]

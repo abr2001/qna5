@@ -9,19 +9,15 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :commented do
-    member do
-      patch :comment
-    end
-  end
-
-  resources :questions, concerns: [:rated, :commented] do
-    resources :answers do
+  resources :questions, concerns: [:rated], shallow: true do
+    resources :comments, defaults: {commentable: 'questions'}, only: [:create]
+    resources :answers, shallow: true do
+      resources :comments, defaults: {commentable: 'answers'}, only: [:create]
       patch :set_best
     end
   end
 
-  resources :answers, concerns: [:rated, :commented], only: [:rate, :cancel_rate]
+  resources :answers, concerns: [:rated], only: [:rate, :cancel_rate]
 
   resources :attachments, only: :destroy
 
