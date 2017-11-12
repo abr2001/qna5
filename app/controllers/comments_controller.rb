@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     end
 
     def commentable_id
-      commentable_name.singularize + '_id'
+      params[:commentable].singularize + '_id'
     end
 
     def publish_comment
@@ -25,8 +25,8 @@ class CommentsController < ApplicationController
       question_id = params['question_id'].present? ? params['question_id'] : @comment.commentable.question_id
       ActionCable.server.broadcast "questions/#{question_id}/comments",
         ApplicationController.render(
-          partial: 'comments/comment_channel',
-          locals: {comment: @comment}
+          partial: 'comments/comment',
+          locals: { comment: @comment }
         )
     end
 end

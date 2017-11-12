@@ -1,4 +1,14 @@
 $ ->
+  $('.add-comment-link').click (e) ->
+    e.preventDefault();
+    $(this).hide();
+    $('.comment-question').show();
+
+  $('.cancel-question-comment-link').click (e) ->
+    e.preventDefault();
+    $('.comment-question').hide();
+    $('.add-comment-link').show();
+
   appendComment = (data) ->
     return if gon.user_id == data['comment']['user_id']
     if data['comment']['commentable_type'] == 'Question'

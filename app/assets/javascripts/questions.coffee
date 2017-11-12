@@ -8,16 +8,6 @@ $ ->
     $(this).hide();
     $('.edit_question').show();
 
-  $('.add-comment-link').click (e) ->
-    e.preventDefault();
-    $(this).hide();
-    $('.comment-question').show();
-
-  $('.cancel-question-comment-link').click (e) ->
-    e.preventDefault();
-    $('.comment-question').hide();
-    $('.add-comment-link').show();
-
   $('.btn-rate').bind 'ajax:success', (e, data, status, xhr) ->
     response = $.parseJSON(xhr.responseText)
     $('.rate-question').find('.rating').html(response.rating)

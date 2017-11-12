@@ -1,4 +1,4 @@
-- item.comments.includes(:user).order(id: :asc).each do |comment|
+- commentable.comments.includes(:user).order(id: :asc).each do |comment|
   .small
     = "#{comment.user.email}: "
     = comment.body
