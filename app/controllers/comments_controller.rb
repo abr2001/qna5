@@ -22,12 +22,15 @@ class CommentsController < ApplicationController
 
     def publish_comment
       return if @comment.errors.any?
-      debugger
       question_id = params[:question_id].present? ? params[:question_id] : @comment.commentable.question_id
-      ActionCable.server.broadcast "questions/#{question_id}/comments",
-        ApplicationController.render(
-          partial: 'comments/comment',
-          locals: { comment: @comment }
+      ActionCable.server.broadcast("questions/#{question_id}/comments",
+          {
+            comment: JSON.parse(@comment.to_json),
+            html: ApplicationController.render(
+              partial: 'comments/comment',
+              locals: { comment: @comment }
+            )
+          }
         )
     end
 end
