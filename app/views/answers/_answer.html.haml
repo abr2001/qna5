@@ -12,7 +12,7 @@
         .col-md-10
           = answer.body.html_safe
           - if show_action?(@question) && !answer.best
-            = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
+            = link_to 'Best answer', answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
           - if show_action?(answer)
             = link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
@@ -38,10 +38,8 @@
     .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
       = render 'shared/comments', commentable: answer
 
-    = form_tag answer_comments_path(answer), method: :patch, remote: :true, id: "comment-answer-#{answer.id}", class: "comment-answer" do
-      = text_area_tag :body, nil, required: true, class: "form-control answer-comment-body"
-      = submit_tag 'Send comment', class: "btn btn-info"
+    = form_for [answer, @comment], remote: :true, html: { id: "comment-answer-#{answer.id}", class: "comment-answer"}   do |f|
+      = f.text_area :body, required: true, class: "form-control answer-comment-body"
+      = f.submit 'Send comment', class: "btn btn-info"
       = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
-    = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }
-
-
+    = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }, id: "add-answer-comment-link-#{answer.id}"
