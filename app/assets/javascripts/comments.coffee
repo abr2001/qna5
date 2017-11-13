@@ -37,6 +37,5 @@ $ ->
       @perform 'follow', id: gon.question_id
 
     received: (data) ->
-      console.log(data)
       appendComment(data)
   }
