@@ -19,28 +19,28 @@
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
 
-      %p Attachments:
-      %ul
-        - answer.attachments.each do |attachment|
-          .attachment{id: "attachment-#{attachment.id}"}
-            %li= link_to attachment.file.identifier, attachment.file.url
-            - if show_action?(answer) && attachment.persisted?
-              .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      - if answer.attachments.length > 0
+        %p Attachments:
+        %ul
+          - answer.attachments.each do |attachment|
+            .attachment{id: "attachment-#{attachment.id}"}
+              %li= link_to attachment.file.identifier, attachment.file.url
+              - if show_action?(answer) && attachment.persisted?
+                .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
-
-
-        = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
-          .well
-            = f.label :body, 'Answer'
-            = f.text_area :body, class: "form-control"
-            = f.submit 'Update', class: "btn btn-primary"
+      = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
+        .well
+          = f.label :body, 'Answer'
+          = f.text_area :body, class: "form-control"
+          = f.submit 'Update', class: "btn btn-primary"
 
     .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
       = render 'comments/list', commentable: answer
 
-    = form_for [answer, @comment], remote: :true, html: { id: "comment-answer-#{answer.id}", class: "comment-answer"}   do |f|
-      = f.text_area :body, required: true, class: "form-control answer-comment-body"
-      = f.submit 'Send comment', class: "btn btn-info"
-      = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
     - if user_signed_in?
+      = form_for [answer, Comment.new], remote: :true, html: { id: "comment-answer-#{answer.id}", class: "comment-answer"} do |f|
+        = f.text_area :body, required: true, class: "form-control answer-comment-body"
+        = f.submit 'Send comment', class: "btn btn-info"
+        = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
+
       = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }, id: "add-answer-comment-link-#{answer.id}"

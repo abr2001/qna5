@@ -37,7 +37,8 @@ $ ->
 
 
   appendAnswer = (data) ->
-    return if $("#answer-#{data.id}")[0]?
+    console.log('answer.coffee: ', data, data.answer.id, $("#answer-#{data.answer.id}")[0], $("#answer-#{data.answer.id}")[0] != undefined)
+    return if $("#answer-#{data.answer.id}")[0] != undefined
     $(".answers").append JST["templates/answer"](data)
 
   App.cable.subscriptions.create "AnswersChannel", {

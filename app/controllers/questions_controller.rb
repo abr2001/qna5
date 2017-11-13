@@ -25,7 +25,6 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    @comment = Comment.new
   end
 
   def destroy

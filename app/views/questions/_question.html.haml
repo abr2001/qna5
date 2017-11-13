@@ -23,7 +23,7 @@
     = render 'comments/list', commentable: @question
 
   .comment-question
-    = form_for [@question, @comment], remote: :true do |f|
+    = form_for [@question, Comment.new], remote: :true do |f|
       = f.text_area :body, required: true, class: "form-control comment-body"
       = f.submit 'Send comment', class: "btn btn-info"
       = link_to 'Cancel', '', class: 'cancel-question-comment-link'

@@ -22,10 +22,10 @@ $ ->
     $('form#comment-answer-' + answer_id).hide();
 
   appendComment = (data) ->
-    return if $("#comment-#{data['comment']['id']}")[0]?
-    if data['comment']['commentable_type'] == 'Question'
+    return if $("#comment-#{data.comment.id}")[0]?
+    if data.comment.commentable_type == 'Question'
       $('.list-comment-question').append(data['html'])
-    if data['comment']['commentable_type'] == 'Answer'
+    if data.comment.commentable_type == 'Answer'
       $('#list-comment-answer-' + data['comment']['commentable_id']).append(data['html'])
 
   App.cable.subscriptions.create "CommentsChannel", {

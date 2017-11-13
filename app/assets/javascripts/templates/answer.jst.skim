@@ -1,9 +1,41 @@
-.answer id="answer-#{@id}"
+.answer id="answer-#{@answer.id}"
   .panel.panel-primary
-    .panel-heading= "answer"
+    .panel-heading
+      = "answer"
+      = @user_email
     .panel-body
       .row
         .col-md-2
-          == App.utils.render('shared/rate', item: @)
+          == App.utils.render('shared/rate', item: @answer)
         .col-md-10
-          = @body
+          = @answer.body
+          - if gon.user_id && gon.user_id == @answer.user_id
+            a data-remote="true" data-method="delete" href="/answers/#{@answer.id}" data-confirm="Are you sure?" rel="nofollow" Delete
+            a.edit-answer-link data-answer-id="#{@answer.id}" href="" Edit
+
+      -if @attachments.length > 0
+        p Attachments:
+        ul
+        -for attach in @attachments
+          .attachment id="attachment-#{attach.id}"
+            li
+              a href=attach.file.url #{attach.file.url}
+
+      form.edit_answer id="edit-answer-#{@answer.id}" accept-charset="UTF-8" action= "/answers/#{@answer.id}" data-remote="true" method="post"
+        .well
+          input name="utf8" type="hidden" value="✓"
+          input name="_method" type="hidden" value="patch"
+          label for="answer_body" Answer
+          textarea#answer_body.form-control name="answer[body]" #{@answer.body}
+          input.btn.btn-primary data-disable-with="Update" name="commit" type="submit" value="Update"
+
+    .list-comment-answer id="list-comment-answer-#{@answer.id}"
+
+    -   if gon.user_id
+      a.add-answer-comment-link id="add-answer-comment-link-#{@answer.id}" data-answer-id="#{@answer.id}" href="" Add comment
+
+      form.comment-answer id="comment-answer-#{@answer.id}" action="/answers/#{@answer.id}/comments" accept-charset="UTF-8" data-remote="true" method="post"
+        input name="utf8" type="hidden" value="✓"
+        textarea#comment_body.form-control.answer-comment-body required="required" name="comment[body]"
+        input.btn.btn-info type="submit" name="commit" value="Send comment" data-disable-with="Send comment"
+        a.cancel-answer-comment-link data-answer-id="#{@answer.id}" Cancel

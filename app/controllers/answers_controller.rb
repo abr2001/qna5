@@ -7,7 +7,6 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
-    @comment = Comment.new
   end
 
   def destroy
@@ -46,11 +45,17 @@ class AnswersController < ApplicationController
   end
 
   def load_question
-    @question = Question.find(params[:question_id])
+    @question = params[:question_id] ? Question.find(params[:question_id]) : @answer.question
   end
 
   def publish_answer
     return if @answer.errors.any?
-    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer
+    ActionCable.server.broadcast("questions/#{@answer.question_id}/answers",
+        {
+          answer: @answer,
+          user_email: @answer.user.email,
+          attachments: @answer.attachments
+        }
+      )
   end
 end
