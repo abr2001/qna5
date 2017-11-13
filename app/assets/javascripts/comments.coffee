@@ -9,6 +9,18 @@ $ ->
     $('.comment-question').hide();
     $('.add-comment-link').show();
 
+  $('.add-answer-comment-link').click (e) ->
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId');
+    $('form#comment-answer-' + answer_id).show();
+
+  $('.cancel-answer-comment-link').click (e) ->
+    e.preventDefault();
+    answer_id = $(this).data('answerId');
+    $('#add-answer-comment-link-'+ answer_id).show();
+    $('form#comment-answer-' + answer_id).hide();
+
   appendComment = (data) ->
     return if gon.user_id == data['comment']['user_id']
     if data['comment']['commentable_type'] == 'Question'

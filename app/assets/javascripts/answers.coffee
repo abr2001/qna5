@@ -3,18 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('.cancel-answer-comment-link').click (e) ->
-    e.preventDefault();
-    $(this).hide();
-    answer_id = $(this).data('answerId');
-    $('form#comment-answer-' + answer_id).hide();
-
-  $('.add-answer-comment-link').click (e) ->
-    e.preventDefault();
-    $(this).hide();
-    answer_id = $(this).data('answerId');
-    $('form#comment-answer-' + answer_id).show();
-
   $('.edit-answer-link').click (e) ->
     e.preventDefault();
     $(this).hide();

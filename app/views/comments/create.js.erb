@@ -1,15 +1,31 @@
 $('.errors').html('');
 
 <% if @comment.valid? %>
-  $('.list-comment-question').html("<%= j render 'shared/comments', commentable: @commentable%>");
-  $('.comment-body').val('');
-  $('.add-comment-link').show();
-  $('.comment-question').hide();
-  $('.add-comment-link').click(function(e) {
-    e.preventDefault();
-    $(this).hide();
-    $('.comment-question').show();
-  });
+
+  <% if @comment.commentable_type == 'Question' %>
+    $('.list-comment-question').html("<%= j render 'shared/comments', commentable: @commentable%>");
+    $('.comment-body').val('');
+    $('.add-comment-link').show();
+    $('.comment-question').hide();
+    $('.add-comment-link').click(function(e) {
+      e.preventDefault();
+      $(this).hide();
+      $('.comment-question').show();
+    });
+  <% end %>
+
+  <% if @comment.commentable_type == 'Answer' %>
+    $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'shared/comments', commentable: @commentable%>");
+    $('.answer-comment-body').val('');
+    $('.add-answer-comment-link').show();
+    $('.comment-answer').hide();
+    $('.add-answer-comment-link').click(function(e) {
+      e.preventDefault();
+      $(this).hide();
+      answer_id = $(this).data('answerId');
+      $('form#comment-answer-' + answer_id).show();
+    });
+  <% end %>
 
 <%else%>
   $('.question').append("<%= j render 'shared/error_message', item: @comment %>");

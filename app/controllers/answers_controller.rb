@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
+    @comment = Comment.new
   end
 
   def destroy
