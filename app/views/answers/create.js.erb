@@ -1,7 +1,10 @@
 $('.errors').html('');
 
 <% if @answer.valid? %>
-  $('.answers').append("<%= j render @answer, index: @question.answers.count - 1 %>");
+  console.log($('#answer-<%= @answer.id %>')[0] === undefined)
+  if ($('#answer-<%= @answer.id %>')[0] === undefined) {
+    $('.answers').append("<%= j render @answer, index: @question.answers.count - 1 %>")
+  }
   $('.edit-answer-link').click(function(e) {
     e.preventDefault();
     $(this).hide();
