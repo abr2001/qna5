@@ -37,7 +37,6 @@ $ ->
 
 
   appendAnswer = (data) ->
-    return if gon.user_id == data['user_id']
     return if $("#answer-#{data.id}")[0]?
     $(".answers").append JST["templates/answer"](data)
 

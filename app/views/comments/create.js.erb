@@ -15,6 +15,9 @@ $('.errors').html('');
   <% end %>
 
   <% if @comment.commentable_type == 'Answer' %>
+    if ($("#answer-#{data.id}")[0]?) {
+      return
+    }
     $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'comments/list', commentable: @commentable%>");
     $('.answer-comment-body').val('');
     $('.add-answer-comment-link').show();
