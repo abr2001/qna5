@@ -1,4 +1,4 @@
-require 'rails_helper'
+ 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
 
@@ -162,14 +162,6 @@ RSpec.describe QuestionsController, type: :controller do
       it { expect(response.body).to include question_2.rating.to_s }
     end
   end
-
-  describe 'PATCH #comment' do
-    let!(:comment_body) { 'test comment' }
-    before { post :comment, format: :js, params: { id: question, body: comment_body } }
-    it { expect(question.comments.count).to eq 1 }
-    it { expect(question.comments.last.body).to eq comment_body }
-  end
-
 
   describe 'PATCH #cancel_rate' do
     let!(:question_2) { create(:question) }
