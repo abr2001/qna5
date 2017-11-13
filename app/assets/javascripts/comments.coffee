@@ -22,7 +22,7 @@ $ ->
     $('form#comment-answer-' + answer_id).hide();
 
   appendComment = (data) ->
-    return if gon.user_id == data['comment']['user_id']
+    return if $("#comment-#{data['comment']['id']}")[0]?
     if data['comment']['commentable_type'] == 'Question'
       $('.list-comment-question').append(data['html'])
     if data['comment']['commentable_type'] == 'Answer'

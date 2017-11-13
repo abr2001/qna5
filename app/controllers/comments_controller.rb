@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
       question_id = params[:question_id].present? ? params[:question_id] : @comment.commentable.question_id
       ActionCable.server.broadcast("questions/#{question_id}/comments",
           {
-            comment: JSON.parse(@comment.to_json),
+            comment: @comment,
             html: ApplicationController.render(
               partial: 'comments/comment',
               locals: { comment: @comment }

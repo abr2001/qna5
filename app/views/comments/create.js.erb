@@ -3,7 +3,9 @@ $('.errors').html('');
 <% if @comment.valid? %>
 
   <% if @comment.commentable_type == 'Question' %>
-    $('.list-comment-question').html("<%= j render 'comments/list', commentable: @commentable%>");
+    if ($('#comment-<%= @comment.id%>')[0] === undefined) {
+      $('.list-comment-question').append("<%= j render 'comments/comment', comment: @comment%>");
+    }
     $('.comment-body').val('');
     $('.add-comment-link').show();
     $('.comment-question').hide();
@@ -15,7 +17,9 @@ $('.errors').html('');
   <% end %>
 
   <% if @comment.commentable_type == 'Answer' %>
-    $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'comments/list', commentable: @commentable%>");
+    if ($('#comment-<%= @comment.id%>')[0] === undefined) {
+      $('#list-comment-answer-<%= @commentable.id%>').append("<%= j render 'comments/comment', comment: @comment%>");
+    }
     $('.answer-comment-body').val('');
     $('.add-answer-comment-link').show();
     $('.comment-answer').hide();
