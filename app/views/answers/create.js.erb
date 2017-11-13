@@ -1,7 +1,7 @@
 $('.errors').html('');
 
 <% if @answer.valid? %>
-  console.log($('#answer-<%= @answer.id %>')[0] === undefined)
+  console.log('answer/create.js.erb: ', $('#answer-<%= @answer.id %>')[0], $('#answer-<%= @answer.id %>')[0] === undefined)
   if ($('#answer-<%= @answer.id %>')[0] === undefined) {
     $('.answers').append("<%= j render @answer, index: @question.answers.count - 1 %>")
   }
