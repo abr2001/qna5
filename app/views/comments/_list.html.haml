@@ -1,4 +1,3 @@
 - commentable.comments.includes(:user).order(id: :asc).each do |comment|
   .small
-    = "#{comment.user.email}: "
-    = comment.body
+    =render 'comments/comment', comment: comment

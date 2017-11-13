@@ -36,5 +36,6 @@ $ ->
       @perform 'follow'
 
     received: (data) ->
+      console.log(data)
       appendComment(data)
   }

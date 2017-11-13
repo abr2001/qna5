@@ -36,7 +36,7 @@
             = f.submit 'Update', class: "btn btn-primary"
 
     .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
-      = render 'shared/comments', commentable: answer
+      = render 'comments/list', commentable: answer
 
     = form_for [answer, @comment], remote: :true, html: { id: "comment-answer-#{answer.id}", class: "comment-answer"}   do |f|
       = f.text_area :body, required: true, class: "form-control answer-comment-body"

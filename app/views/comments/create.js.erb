@@ -3,7 +3,7 @@ $('.errors').html('');
 <% if @comment.valid? %>
 
   <% if @comment.commentable_type == 'Question' %>
-    $('.list-comment-question').html("<%= j render 'shared/comments', commentable: @commentable%>");
+    $('.list-comment-question').html("<%= j render 'comments/list', commentable: @commentable%>");
     $('.comment-body').val('');
     $('.add-comment-link').show();
     $('.comment-question').hide();
@@ -15,7 +15,7 @@ $('.errors').html('');
   <% end %>
 
   <% if @comment.commentable_type == 'Answer' %>
-    $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'shared/comments', commentable: @commentable%>");
+    $('#list-comment-answer-<%= @commentable.id%>').html("<%= j render 'comments/list', commentable: @commentable%>");
     $('.answer-comment-body').val('');
     $('.add-answer-comment-link').show();
     $('.comment-answer').hide();

@@ -22,7 +22,8 @@ class CommentsController < ApplicationController
 
     def publish_comment
       return if @comment.errors.any?
-      question_id = params['question_id'].present? ? params['question_id'] : @comment.commentable.question_id
+      debugger
+      question_id = params[:question_id].present? ? params[:question_id] : @comment.commentable.question_id
       ActionCable.server.broadcast "questions/#{question_id}/comments",
         ApplicationController.render(
           partial: 'comments/comment',

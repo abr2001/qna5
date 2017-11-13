@@ -28,7 +28,7 @@ module Commented
         comment: JSON.parse(@comment.to_json),
         html: ApplicationController.render(
           locals: { item: @commentable },
-          partial: 'shared/comments'
+          partial: 'comments/list'
         )
       }
     )

@@ -20,7 +20,7 @@
   %p= question.body.html_safe
 
   .list-comment-question
-    = render 'shared/comments', commentable: @question
+    = render 'comments/list', commentable: @question
 
   .comment-question
     = form_for [@question, @comment], remote: :true do |f|
