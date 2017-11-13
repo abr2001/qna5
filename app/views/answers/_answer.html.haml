@@ -42,4 +42,5 @@
       = f.text_area :body, required: true, class: "form-control answer-comment-body"
       = f.submit 'Send comment', class: "btn btn-info"
       = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
-    = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }, id: "add-answer-comment-link-#{answer.id}"
+    - if user_signed_in?
+      = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }, id: "add-answer-comment-link-#{answer.id}"
