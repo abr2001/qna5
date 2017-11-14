@@ -26,7 +26,7 @@ $ ->
     if data.comment.commentable_type == 'Question'
       $('.list-comment-question').append(data['html'])
     if data.comment.commentable_type == 'Answer'
-      $('#list-comment-answer-' + data['comment']['commentable_id']).append(data['html'])
+      $('#list-comment-answer-' + data.comment.commentable_id).append(data['html'])
 
   App.cable.subscriptions.create "CommentsChannel", {
     connected: ->

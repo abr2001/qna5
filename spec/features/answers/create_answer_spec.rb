@@ -39,4 +39,33 @@ feature 'Create answer', %q{
     expect(page).to_not have_link 'Create'
   end
 
+  context "multiple sessions", :cable do
+    scenario "all users see new answer in real-time", js: true do
+      Capybara.using_session("user") do
+        login_user
+        visit question_path(question)
+      end
+
+      Capybara.using_session("guest") do
+        visit question_path(question)
+      end
+
+      Capybara.using_session("user") do
+        within('.new_answer') do
+          fill_in 'Answer', with: 'text text text'
+          click_on 'Create answer'
+        end
+        within('.answers') do
+          expect(page).to have_content 'text text text'
+        end
+      end
+
+      Capybara.using_session("guest") do
+        within('.answers') do
+          expect(page).to have_content 'text text text'
+        end
+      end
+    end
+  end
+
 end
