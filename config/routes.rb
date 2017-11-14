@@ -9,8 +9,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: [:rated] do
-    resources :answers do
+  resources :questions, concerns: [:rated], shallow: true do
+    resources :comments, defaults: {commentable: 'questions'}, only: [:create]
+    resources :answers, shallow: true do
+      resources :comments, defaults: {commentable: 'answers'}, only: [:create]
       patch :set_best
     end
   end
@@ -19,4 +21,5 @@ Rails.application.routes.draw do
 
   resources :attachments, only: :destroy
 
+  mount ActionCable.server => "/cable"
 end

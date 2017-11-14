@@ -42,6 +42,8 @@ gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'nested_form'
+gem 'skim'
+gem 'gon'
 
 group :test do
   gem 'rspec-rails'
@@ -53,6 +55,7 @@ group :test do
   gem 'launchy'
   gem 'poltergeist'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'action-cable-testing'
 end
 
 group :development do

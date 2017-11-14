@@ -1,6 +1,8 @@
 .answer{id: "answer-#{answer.id}" }
   .panel.panel-primary
-    .panel-heading= answer.best ? "Best answer" : "answer"
+    .panel-heading
+      = answer.best ? "Best answer" : "answer"
+      = answer.user.email
     .panel-body
       .row
         .col-md-2
@@ -9,27 +11,36 @@
 
         .col-md-10
           = answer.body.html_safe
-          - if user_signed_in? && current_user.author_of?(@question) && !answer.best
-            = link_to 'Best answer', question_answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
+          - if show_action?(@question) && !answer.best
+            = link_to 'Best answer', answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
-          - if user_signed_in? && current_user.author_of?(answer)
-            = link_to 'Delete', question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+          - if show_action?(answer)
+            = link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
 
-      %p Attachments:
-      %ul
-        - answer.attachments.each do |attachment|
-          .attachment{id: "attachment-#{attachment.id}"}
-            %li= link_to attachment.file.identifier, attachment.file.url
-            - if user_signed_in? && current_user.author_of?(answer) && attachment.persisted?
-              .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+      - if answer.attachments.length > 0
+        %p Attachments:
+        %ul
+          - answer.attachments.each do |attachment|
+            .attachment{id: "attachment-#{attachment.id}"}
+              %li= link_to attachment.file.identifier, attachment.file.url
+              - if show_action?(answer) && attachment.persisted?
+                .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
+      = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
+        .well
+          = f.label :body, 'Answer'
+          = f.text_area :body, class: "form-control"
+          = f.submit 'Update', class: "btn btn-primary"
 
+    .list-comment-answer{id: "list-comment-answer-#{answer.id}" }
+      = render 'comments/list', commentable: answer
 
-        = form_for [@question, answer], remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
-          .well
-            = f.label :body, 'Answer'
-            = f.text_area :body, class: "form-control"
-            = f.submit 'Update', class: "btn btn-primary"
+    - if user_signed_in?
+      = form_for [answer, Comment.new], remote: :true, html: { id: "comment-answer-#{answer.id}", class: "comment-answer"} do |f|
+        = f.text_area :body, required: true, class: "form-control answer-comment-body"
+        = f.submit 'Send comment', class: "btn btn-info"
+        = link_to 'Cancel', '', class: 'cancel-answer-comment-link', data: { answer_id: answer.id }
 
+      = link_to 'Add comment', '', class: 'add-answer-comment-link', data: { answer_id: answer.id }, id: "add-answer-comment-link-#{answer.id}"

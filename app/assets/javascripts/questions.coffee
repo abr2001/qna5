@@ -29,3 +29,15 @@ $ ->
     $('.rate-question').find('.current-user-rate').html(response.rate);
     $('.rate-question').find('.btn-cancel-rate').hide();
     $('.rate-question').find('.rate-errors').html('');
+
+  App.cable.subscriptions.create "QuestionsChannel", {
+    connected: ->
+      @follow()
+
+    follow: ->
+      @perform 'follow'
+
+    received: (data) ->
+      $(".questions-list").append data['question']
+  }
+

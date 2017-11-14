@@ -15,4 +15,11 @@
 //= require jquery.remotipart
 //= require bootstrap-sprockets
 //= require jquery_nested_form
+//= require action_cable
 //= require_tree .
+//= require ./shared/utils
+//= require_tree ./templates
+
+var App = App || {};
+App.cable = ActionCable.createConsumer();
+

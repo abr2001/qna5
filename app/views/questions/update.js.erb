@@ -7,6 +7,11 @@ $('.errors').html('');
       $(this).hide();
       $('.edit_question').show();
     });
+    $('.add-comment-link').click(function(e) {
+      e.preventDefault();
+      $(this).hide();
+      $('.comment-question').show();
+    });
 
 <%else%>
   $('.question').append("<%= j render 'shared/error_message', item: @question %>");

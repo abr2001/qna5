@@ -35,3 +35,19 @@ $ ->
     $(answer).find('.btn-cancel-rate').hide();
     $(answer).find('.rate-errors').html('');
 
+
+  appendAnswer = (data) ->
+    return if $("#answer-#{data.answer.id}")[0] != undefined
+    $(".answers").append JST["templates/answer"](data)
+
+  App.cable.subscriptions.create "AnswersChannel", {
+    connected: ->
+      @follow()
+
+    follow: ->
+      return unless gon.question_id
+      @perform 'follow', id: gon.question_id
+
+    received: (data) ->
+      appendAnswer(data)
+  }

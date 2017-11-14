@@ -1,0 +1,29 @@
+%nav.navbar.navbar-inverse.navbar-default.navbar-static-top{role: "navigation"}
+  .container-fluid
+    .navbar-header
+      = link_to "Question & Answer", root_path, class: 'navbar-brand'
+    %ul.nav.navbar-nav
+      - if user_signed_in?
+        %li
+          = link_to 'All questions', questions_path
+        %li
+          = link_to 'My questions', questions_path(only_me: true)
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        %li
+          = link_to 'New question', new_question_path
+      - if user_signed_in?
+        %p.navbar-text= current_user.email
+        %li
+          = link_to destroy_user_session_path, method: "delete" do
+            %span.glyphicon.glyphicon-log-out
+            Log out
+      - else
+        %li
+          = link_to new_registration_path('user') do
+            %span.glyphicon.glyphicon-user
+            Sign Up
+        %li
+          = link_to new_user_session_path do
+            %span.glyphicon.glyphicon-log-in
+            Login

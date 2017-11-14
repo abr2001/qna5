@@ -1,7 +1,7 @@
 .row
-  .col-md-2.action-question
-
-    - if user_signed_in? && current_user.author_of?(@question)
+  .action-question
+    %p=question.user.email
+    - if show_action?(@question)
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
       = link_to 'Edit', '', class: 'edit-question-link'
 
@@ -16,7 +16,16 @@
 
     .rate-question= render 'shared/rate', item: @question
 
+  %b= question.title
+  %p= question.body.html_safe
 
-  .col-md-10
-    %b= question.title
-    %p= question.body.html_safe
+  .list-comment-question
+    = render 'comments/list', commentable: @question
+
+  .comment-question
+    = form_for [@question, Comment.new], remote: :true do |f|
+      = f.text_area :body, required: true, class: "form-control comment-body"
+      = f.submit 'Send comment', class: "btn btn-info"
+      = link_to 'Cancel', '', class: 'cancel-question-comment-link'
+  - if user_signed_in?
+    = link_to 'Add comment', '', class: 'add-comment-link'
