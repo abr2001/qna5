@@ -105,10 +105,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'assigns new answer for question' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
     xit 'builds new attachment for answer' do
       expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
     end
