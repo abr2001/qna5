@@ -5,26 +5,21 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   def index
-    @questions = params[:only_me] ? current_user.questions.list : Question.list
+    respond_with(@questions = params[:only_me] ? current_user.questions.list : Question.list)
   end
 
   def new
-    @question = Question.new
+    respond_with(@question = Question.new)
   end
 
 
   def create
-    @question = Question.new(quesion_params)
-    @question.user = current_user
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    respond_with(@question = Question.create(question_params.merge(user: current_user)))
   end
 
   def show
     @answer = Answer.new
+    respond_with(@question)
   end
 
   def destroy
@@ -39,7 +34,7 @@ class QuestionsController < ApplicationController
 
   def update
     if current_user.author_of?(@question)
-      @question.update(quesion_params)
+      @question.update(question_params)
     else
       head :forbidden
     end
@@ -47,7 +42,7 @@ class QuestionsController < ApplicationController
 
   private
 
-  def quesion_params
+  def question_params
     params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy])
   end
 
