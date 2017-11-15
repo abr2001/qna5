@@ -69,7 +69,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render js' do
         delete :destroy, format: :js, params: { id: answer2, question_id: question }
-        expect(response.status).to eq 200
+        expect(response.status).to eq 403
       end
     end
   end
