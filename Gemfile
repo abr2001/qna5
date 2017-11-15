@@ -44,6 +44,10 @@ gem 'remotipart'
 gem 'nested_form'
 gem 'skim'
 gem 'gon'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-vkontakte'
+
 
 group :test do
   gem 'rspec-rails'
