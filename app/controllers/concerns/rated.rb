@@ -13,13 +13,8 @@ module Rated
   end
 
   def cancel_rate
-    if @rate.destroy
-      render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id }
-    else
-      head :unprocessable_entity
-    end
+    respond_with(@rate.destroy)
   end
-
 
   private
 

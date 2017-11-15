@@ -7,4 +7,4 @@
   .col-12
     Your rate:
     .current-user-rate{ rate: "#{current_user.rate_of(item)}" }= current_user.rate_of(item)
-    = link_to 'Cancel rate', polymorphic_path([:cancel_rate, item]), remote: true, class: 'btn btn-default btn-cancel-rate', method: :patch
+    = link_to 'Cancel rate', polymorphic_path([:cancel_rate, item]), remote: true, data: {type: :json}, class: 'btn btn-default btn-cancel-rate', method: :patch
