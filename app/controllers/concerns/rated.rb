@@ -3,8 +3,8 @@ module Rated
 
   included do
     before_action :set_ratable, only: [:rate, :cancel_rate]
-    before_action :check_author, only: [:rate, :cancel_rate]
     before_action :load_rate, only: [:cancel_rate]
+    before_action :check_author, only: [:rate, :cancel_rate]
   end
 
   def rate
@@ -13,13 +13,8 @@ module Rated
   end
 
   def cancel_rate
-    if @rate.destroy
-      render json: {rating: @ratable.rating, rate: current_user.rate_of(@ratable), id: @ratable.id }
-    else
-      head :unprocessable_entity
-    end
+    respond_with(@rate.destroy)
   end
-
 
   private
 
