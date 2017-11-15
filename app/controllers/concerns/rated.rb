@@ -3,8 +3,8 @@ module Rated
 
   included do
     before_action :set_ratable, only: [:rate, :cancel_rate]
-    before_action :check_author, only: [:rate, :cancel_rate]
     before_action :load_rate, only: [:cancel_rate]
+    before_action :check_author, only: [:rate, :cancel_rate]
   end
 
   def rate

@@ -153,7 +153,6 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question_2.rating).to eq 1
       end
       it { expect(response).to have_http_status(:ok) }
-      it { expect(response.body).to include question_2.rating.to_s }
     end
     context 'not author negative rate question' do
       before { post :rate, format: :json, params: { id: question_2, negative: true } }
@@ -161,7 +160,6 @@ RSpec.describe QuestionsController, type: :controller do
         expect(question_2.rating).to eq -1
       end
       it { expect(response).to have_http_status(:ok) }
-      it { expect(response.body).to include question_2.rating.to_s }
     end
   end
 
