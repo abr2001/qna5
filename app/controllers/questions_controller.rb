@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   respond_to :js
-
+  respond_to :json, only: [:rate, :cancel_rate]
   def index
     respond_with(@questions = params[:only_me] ? current_user.questions.list : Question.list)
   end
