@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/poltergeist'
 require 'phantomjs'
 require 'action_cable/testing/rspec'
+require "action_cable/testing/rspec/features"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

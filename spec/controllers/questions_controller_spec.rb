@@ -105,10 +105,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'assigns new answer for question' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
     xit 'builds new attachment for answer' do
       expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
     end
@@ -144,7 +140,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #rate' do
     context 'author try rate question' do
-      before { post :rate, format: :js, params: { id: question } }
+      before { post :rate, format: :json, params: { id: question } }
       it 'not rate for question in the database' do
         expect(question.rating).to eq 0
       end
@@ -152,20 +148,18 @@ RSpec.describe QuestionsController, type: :controller do
     end
     let!(:question_2) { create(:question) }
     context 'not author positive rate question' do
-      before { post :rate, format: :js, params: { id: question_2 } }
+      before { post :rate, format: :json, params: { id: question_2 } }
       it 'add rate for question in the database' do
         expect(question_2.rating).to eq 1
       end
       it { expect(response).to have_http_status(:ok) }
-      it { expect(response.body).to include question_2.rating.to_s }
     end
     context 'not author negative rate question' do
-      before { post :rate, format: :js, params: { id: question_2, negative: true } }
+      before { post :rate, format: :json, params: { id: question_2, negative: true } }
       it 'add rate for question in the database' do
         expect(question_2.rating).to eq -1
       end
       it { expect(response).to have_http_status(:ok) }
-      it { expect(response.body).to include question_2.rating.to_s }
     end
   end
 
@@ -174,12 +168,12 @@ RSpec.describe QuestionsController, type: :controller do
     let!(:rate) { create(:rate, ratable: question_2, user: @user) }
     let!(:rate_2) { create(:rate, ratable: question) }
     context 'author of rate cancel rate of question' do
-      before { post :cancel_rate, format: :js, params: { id: question_2 } }
+      before { post :cancel_rate, format: :json, params: { id: question_2 } }
       it { expect(question_2.rating).to eq 0 }
       it { expect(response).to have_http_status(:ok) }
     end
     context 'not author of rate cancel rate of question' do
-      before { post :cancel_rate, format: :js, params: { id: question } }
+      before { post :cancel_rate, format: :json, params: { id: question } }
       it { expect(question.rating).to eq 1 }
       it { expect(response).to have_http_status(:forbidden) }
     end

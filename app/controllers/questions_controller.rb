@@ -2,53 +2,45 @@ class QuestionsController < ApplicationController
   include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update]
+  before_action :confirm_authorship, only: [:destroy, :update]
   after_action :publish_question, only: [:create]
 
+  respond_to :js
+  respond_to :json, only: [:rate, :cancel_rate]
   def index
-    @questions = params[:only_me] ? current_user.questions.list : Question.list
+    respond_with(@questions = params[:only_me] ? current_user.questions.list : Question.list)
   end
 
   def new
-    @question = Question.new
+    respond_with(@question = Question.new)
   end
 
 
   def create
-    @question = Question.new(quesion_params)
-    @question.user = current_user
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    respond_with(@question = Question.create(question_params.merge(user: current_user)))
   end
 
   def show
-    @answer = Answer.new
+    respond_with(@question)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      notice = 'Your question successfully deleted'
-    else
-      notice = 'Only the author can delete the question'
-    end
-    redirect_to questions_path, notice: notice
+    respond_with(@question.destroy)
   end
 
   def update
-    if current_user.author_of?(@question)
-      @question.update(quesion_params)
-    else
-      head :forbidden
-    end
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   private
 
-  def quesion_params
+  def question_params
     params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy])
+  end
+
+  def confirm_authorship
+    head :forbidden unless current_user.author_of?(@question)
   end
 
   def load_question

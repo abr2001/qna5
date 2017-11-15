@@ -5,33 +5,24 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:update, :set_best, :create]
   after_action :publish_answer, only: [:create]
 
+  respond_to :js, :json
+
   def create
-    @answer = @question.answers.create(answer_params.merge(user: current_user))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      flash[:notice] = 'Your answer successfully deleted'
-    else
-      flash[:notice] = 'Only the author can delete the answer'
-    end
+    respond_with(@answer.destroy)
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-    else
-      head :forbidden
-    end
+    @answer.update(answer_params)
+    respond_with(@answer)
   end
 
   def set_best
-    if current_user.author_of?(@answer.question)
-      @answer.set_best
-    else
-      head :forbidden
-    end
+    @answer.set_best
+    respond_with(@answer)
   end
 
   private
@@ -42,6 +33,7 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id] || params[:answer_id])
+    head :forbidden unless current_user.author_of?(params[:action] == 'set_best' ? @answer.question : @answer)
   end
 
   def load_question
