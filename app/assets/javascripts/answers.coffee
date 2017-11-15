@@ -24,7 +24,8 @@ $ ->
   .bind 'ajax:error', (e, xhr, status, error) ->
     response = $.parseJSON(xhr.responseText)
     $.each response.errors, (index, value) ->
-      answer = $('#answer-' + response.id)
+      answer_id = e.currentTarget.dataset['ratableId']
+      answer = $('#answer-' + answer_id)
       $(answer).find('.rate-errors').html(value)
 
   $('.btn-cancel-rate').bind 'ajax:success', (e, data, status, xhr) ->
