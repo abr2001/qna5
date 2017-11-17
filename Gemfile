@@ -47,7 +47,7 @@ gem 'gon'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
-
+gem 'dotenv-rails'
 
 group :test do
   gem 'rspec-rails'
