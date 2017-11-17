@@ -11,17 +11,19 @@ RSpec.describe User, type: :model do
   let!(:user) { create :user }
   let!(:question) { create :question, user: user }
 
-  it 'the user is the author of the question' do
-    expect(user).to be_author_of(question)
-  end
+  describe '.author_of?' do
+    context 'the user is the author of the question' do
+      it { expect(user).to be_author_of(question) }
+    end
 
-  let!(:user_not_author) { create :user }
-  it 'the user is not the author of the question' do
-    expect(user_not_author).to_not be_author_of(question)
+    let!(:user_not_author) { create :user }
+    context 'the user is not the author of the question' do
+      it { expect(user_not_author).to_not be_author_of(question) }
+    end
   end
 
   let!(:question_2) { create :question, user: user }
-  describe 'User rate ' do
+  describe '.rate_of' do
     it 'for question' do
       rate = question.rates.create(user_id: user.id, value: 1)
       expect(user.rate_of(question)).to eq(1)
@@ -32,13 +34,15 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'User has rate?' do
-    it 'for question' do
-      rate = question.rates.create(user_id: user.id, value: 1)
-      expect(user).to be_has_rate(question)
+  describe '.has_rate?' do
+    context 'question has rate' do
+      it {
+        rate = question.rates.create(user_id: user.id, value: 1)
+        expect(user).to be_has_rate(question)
+      }
     end
-    it 'for question_2' do
-      expect(user).to_not be_has_rate(question_2)
+    context 'question not has rate' do
+      it { expect(user).to_not be_has_rate(question_2) }
     end
   end
 
