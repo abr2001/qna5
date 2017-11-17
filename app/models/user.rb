@@ -29,7 +29,11 @@ class User < ApplicationRecord
       email = auth.info[:email]
       user = User.where(email: email).first
       if user
-        user.create_authorization(auth)
+        User.transaction do
+          user.update(confirmed_at: nil)
+          user.send_confirmation_instructions
+          user.create_authorization(auth)
+        end
       else
         password = Devise.friendly_token[0, 20]
         User.transaction do
