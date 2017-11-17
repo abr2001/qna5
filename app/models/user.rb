@@ -4,9 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook, :twitter]
-  has_many :answers
-  has_many :questions
-  has_many :rates
+  has_many :answers, dependent: :destroy
+  has_many :questions, dependent: :destroy
+  has_many :rates, dependent: :destroy
+  has_many :authorizations, dependent: :destroy
 
   def author_of?(item)
     id == item.user_id
@@ -21,4 +22,26 @@ class User < ApplicationRecord
     rate.nil? ? 0 : rate.value
   end
 
+  def self.find_for_oauth(auth)
+    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    return authorization.user if authorization
+    if auth.info.try(:[], :email)
+      email = auth.info[:email]
+      user = User.where(email: email).first
+      if user
+        user.create_authorization(auth)
+      else
+        password = Devise.friendly_token[0, 20]
+        User.transaction do
+          user = User.create!(email: email, password: password, password_confirmation: password)
+          user.create_authorization(auth)
+        end
+      end
+    end
+    user
+  end
+
+  def create_authorization(auth)
+    self.authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
 end
