@@ -76,6 +76,7 @@ group :test, :development do
   gem 'ffaker'
   gem 'pry-rails'
   gem 'pry-nav'
+  gem 'letter_opener'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
