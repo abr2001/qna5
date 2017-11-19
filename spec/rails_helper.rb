@@ -9,6 +9,7 @@ require 'capybara/poltergeist'
 require 'phantomjs'
 require 'action_cable/testing/rspec'
 require "action_cable/testing/rspec/features"
+require 'capybara/email/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -36,6 +37,7 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.extend ControllerMacros, type: :controller
+  config.include OmniauthMacros
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -64,9 +66,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-
-
 end
 
 Shoulda::Matchers.configure do |config|
@@ -76,3 +75,4 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+OmniAuth.config.test_mode = true
