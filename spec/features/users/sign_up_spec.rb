@@ -13,7 +13,7 @@ feature 'Siging up', %q{
     fill_in 'Password', with: '123456'
     fill_in 'Password confirmation', with: '123456'
     click_on 'Sign up'
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'Please follow the link to activate your account'
   end
 
   scenario "New user try to sign up with invalid data" do
