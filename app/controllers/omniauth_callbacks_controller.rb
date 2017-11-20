@@ -7,6 +7,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def register
+    session[:auth] = nil
   end
 
   private
@@ -19,13 +20,14 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         sign_in_and_redirect @user, event: :authentication
         set_flash_message(:notice, :success, kind: auth.provider) if is_navigational_format?
       else
+        session[:auth] = { uid: auth.uid, provider: auth.provider }
         render 'omniauth_callbacks/enter_email', locals: { auth: auth}
       end
     end
   end
 
   def auth
-    request.env['omniauth.auth'] || OmniAuth::AuthHash.new(params['auth'])
+    request.env['omniauth.auth'] || OmniAuth::AuthHash.new(params[:auth].merge(session[:auth]))
   end
 
 end
