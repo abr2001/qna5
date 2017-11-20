@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
   root to: 'questions#index'
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_scope :user do
+    post '/register' => 'omniauth_callbacks#register'
+  end
 
   concern :rated do
     member do

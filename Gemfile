@@ -44,11 +44,16 @@ gem 'remotipart'
 gem 'nested_form'
 gem 'skim'
 gem 'gon'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'dotenv-rails'
 
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'capybara-email'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
@@ -72,6 +77,7 @@ group :test, :development do
   gem 'ffaker'
   gem 'pry-rails'
   gem 'pry-nav'
+  gem 'letter_opener'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

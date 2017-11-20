@@ -1,0 +1,5 @@
+= form_tag register_path, method: :post do
+  %h4 Для дальнейшей авторизации, необходим email
+  = label_tag 'Email'
+  = email_field 'auth[info]',  :email, class: "form-control"
+  = submit_tag 'Отправить'
