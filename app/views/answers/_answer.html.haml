@@ -11,11 +11,12 @@
 
         .col-md-10
           = answer.body.html_safe
-          - if show_action?(@question) && !answer.best
+          - if can?(:set_best, answer)
             = link_to 'Best answer', answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
-          - if show_action?(answer)
+          - if can?(:destroy, answer)
             = link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
+          - if can?(:update, answer)
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
 
 
@@ -25,7 +26,7 @@
           - answer.attachments.each do |attachment|
             .attachment{id: "attachment-#{attachment.id}"}
               %li= link_to attachment.file.identifier, attachment.file.url
-              - if show_action?(answer) && attachment.persisted?
+              - if can?(:destroy, attachment)
                 .delete_answer_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
       = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}"}  do |f|
