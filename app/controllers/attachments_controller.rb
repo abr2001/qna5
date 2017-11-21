@@ -1,6 +1,6 @@
 class AttachmentsController < ApplicationController
   before_action :load_attachment, only: [:destroy]
-
+  authorize_resource
   respond_to :js
 
   def destroy
@@ -11,6 +11,5 @@ class AttachmentsController < ApplicationController
 
   def load_attachment
     @attachment = Attachment.find(params[:id])
-    head :forbidden unless current_user.author_of?(@attachment.attachable)
   end
 end

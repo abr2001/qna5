@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: [:create]
 
   respond_to :js, :json
-
+  authorize_resource
   def create
     respond_with(@answer = @question.answers.create(answer_params.merge(user: current_user)))
   end
@@ -21,8 +21,8 @@ class AnswersController < ApplicationController
   end
 
   def set_best
-    @answer.set_best
-    respond_with(@answer)
+    authorize! :set_best, @answer
+    respond_with(@answer.set_best)
   end
 
   private
@@ -33,7 +33,6 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id] || params[:answer_id])
-    head :forbidden unless current_user.author_of?(params[:action] == 'set_best' ? @answer.question : @answer)
   end
 
   def load_question
