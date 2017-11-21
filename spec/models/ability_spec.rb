@@ -42,6 +42,11 @@ describe Ability do
     it { should_not be_able_to :set_best, create(:answer, question: question, best: true), user: user }
     it { should_not be_able_to :set_best, create(:answer, question: other_question), user: user }
 
+    it { should_not be_able_to :rate, question, user: user }
+    it { should be_able_to :rate, other_question, user: user }
+    it { should_not be_able_to :cancel_rate, question, user: user }
+    it { should be_able_to :cancel_rate, other_question, user: user }
+
     it { should be_able_to :destroy, create(:answer, user: user), user: user }
     it { should_not be_able_to :destroy, create(:answer, user: other), user: user }
     it { should be_able_to :destroy, question, user: user }

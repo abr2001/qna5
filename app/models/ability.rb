@@ -23,8 +23,14 @@ class Ability
 
   def user_abilities
     guest_abilities
+    can :rate, [Question, Answer] do |ratable|
+      ratable.user_id != user.id
+    end
+    can :cancel_rate, [Question, Answer] do |ratable|
+      ratable.user_id != user.id
+    end
     can :create, [Question, Answer, Comment, Attachment]
-    can :update, [Question,Answer], user_id: user.id
+    can :update, [Question, Answer], user_id: user.id
     can :set_best, Answer do |answer|
       answer.question.user_id == user.id && !answer.best
     end
