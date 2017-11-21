@@ -2,9 +2,8 @@ class QuestionsController < ApplicationController
   include Rated
   before_action :authenticate_user!, only: [:new, :create]
   before_action :load_question, only: [:show, :destroy, :update]
-  before_action :confirm_authorship, only: [:destroy, :update]
   after_action :publish_question, only: [:create]
-
+  authorize_resource
   respond_to :js
   respond_to :json, only: [:rate, :cancel_rate]
   def index
@@ -37,10 +36,6 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:title, :body, attachments_attributes: [:file, :_destroy])
-  end
-
-  def confirm_authorship
-    head :forbidden unless current_user.author_of?(@question)
   end
 
   def load_question

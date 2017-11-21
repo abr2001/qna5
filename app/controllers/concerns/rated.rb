@@ -23,6 +23,7 @@ module Rated
 
   def set_ratable
     @ratable = model_klass.find(params[:id])
+    authorize! action_name.to_sym, @ratable
   end
 
   def load_rate

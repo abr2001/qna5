@@ -89,12 +89,12 @@ RSpec.describe AnswersController, type: :controller do
     let!(:user2) { create(:user) }
     let!(:question2) { create(:question, user: user2) }
     let!(:answer_22) { create(:answer, :with_user, question: question2) }
-    context 'Not Question author not selects a best answer' do
+    context 'Not author of Question not selects a best answer' do
       it 'not change answer in database' do
         get :set_best, format: :js, params: { answer_id: answer_22, question_id: question2  }, xhr: true
         answer_22.reload
-        expect(answer_22.best).to eq false
         expect(response).to have_http_status(:forbidden)
+        expect(answer_22.best).to eq false
       end
     end
   end
