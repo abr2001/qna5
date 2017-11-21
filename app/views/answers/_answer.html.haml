@@ -14,7 +14,7 @@
           - if can?(:set_best, answer)
             = link_to 'Best answer', answer_set_best_path(question_id: @question, answer_id: answer), class: 'btn btn-primary', remote: true, method: :patch
 
-          - if can?(:delete, answer)
+          - if can?(:destroy, answer)
             = link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
           - if can?(:update, answer)
             = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
