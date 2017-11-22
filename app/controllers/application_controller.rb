@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.json { render json: [exception.message], status: :forbidden}
       format.html { redirect_to root_url, alert: exception.message, status: :forbidden}
-      format.js   { head :forbidden, content_type: 'text/html' }
+      format.js   { head :forbidden }
     end
   end
   check_authorization unless: :devise_controller?
