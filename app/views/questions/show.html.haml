@@ -9,13 +9,13 @@ Count of answers:
     .attachment{id: "attachment-#{attachment.id}"}
       %li
         = link_to attachment.file.identifier, attachment.file.url
-        - if show_action?(@question) && attachment.persisted?
+        - if can?(:destroy, attachment)
           .delete_question_file= link_to 'Delete', attachment, method: :delete, data: { confirm: 'Are you sure?' }, remote: true
 
 .answers
   = render 'answers/list'
 
-- if user_signed_in?
+- if can?(:create, Answer)
   = nested_form_for [@question, Answer.new], remote: true do |f|
     = f.label :body, 'Answer'
     = f.text_area :body, class: "form-control new-answer-body"

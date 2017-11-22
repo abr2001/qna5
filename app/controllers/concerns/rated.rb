@@ -4,7 +4,6 @@ module Rated
   included do
     before_action :set_ratable, only: [:rate, :cancel_rate]
     before_action :load_rate, only: [:cancel_rate]
-    before_action :check_author, only: [:rate, :cancel_rate]
   end
 
   def rate
@@ -24,10 +23,7 @@ module Rated
 
   def set_ratable
     @ratable = model_klass.find(params[:id])
-  end
-
-  def check_author
-    head :forbidden if current_user.author_of?(@ratable)
+    authorize! action_name.to_sym, @ratable
   end
 
   def load_rate

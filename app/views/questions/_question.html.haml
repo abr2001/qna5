@@ -1,8 +1,9 @@
 .row
   .action-question
     %p=question.user.email
-    - if show_action?(@question)
+    - if can?(:destroy, @question)
       = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+    - if can?(:update, @question)
       = link_to 'Edit', '', class: 'edit-question-link'
 
       = form_for @question, remote: true do |f|
