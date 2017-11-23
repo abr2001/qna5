@@ -49,6 +49,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'dotenv-rails'
 gem 'cancancan'
+gem 'doorkeeper'
 
 group :test do
   gem 'rspec-rails'
