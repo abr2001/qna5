@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
       format.js   { head :forbidden }
     end
   end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
   check_authorization unless: :devise_controller?
 
   private
