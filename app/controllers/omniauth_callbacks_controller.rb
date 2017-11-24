@@ -27,7 +27,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def auth
-    request.env['omniauth.auth'] || OmniAuth::AuthHash.new(params[:auth].merge(session[:auth]))
+    request.env['omniauth.auth'] || OmniAuth::AuthHash.new(params_auth)
+  end
+
+  def params_auth
+    session[:auth] ? params[:auth].merge(session[:auth]) : params[:auth]
   end
 
 end
