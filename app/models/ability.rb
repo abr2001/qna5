@@ -38,7 +38,6 @@ class Ability
     can :destroy, Attachment do |attachment|
       attachment.attachable.user_id == user.id
     end
+    can :me, User, id: user.id
   end
-
-
 end

@@ -80,6 +80,7 @@ group :test, :development do
   gem 'pry-rails'
   gem 'pry-nav'
   gem 'letter_opener'
+  gem 'json_spec'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
