@@ -50,6 +50,10 @@ gem 'omniauth-twitter'
 gem 'dotenv-rails'
 gem 'cancancan'
 gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
+
 
 group :test do
   gem 'rspec-rails'
