@@ -5,6 +5,8 @@ RSpec.describe QuestionsController, type: :controller do
   login_user
   let(:question) { create(:question, user: @user) }
 
+  it_behaves_like 'Rated', 'question'
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
 
@@ -138,46 +140,5 @@ RSpec.describe QuestionsController, type: :controller do
 
   end
 
-  describe 'PATCH #rate' do
-    context 'author try rate question' do
-      before { post :rate, format: :json, params: { id: question } }
-      it 'not rate for question in the database' do
-        expect(question.rating).to eq 0
-      end
-      it { expect(response).to have_http_status(:forbidden) }
-    end
-    let!(:question_2) { create(:question) }
-    context 'not author positive rate question' do
-      before { post :rate, format: :json, params: { id: question_2 } }
-      it 'add rate for question in the database' do
-        expect(question_2.rating).to eq 1
-      end
-      it { expect(response).to have_http_status(:ok) }
-    end
-    context 'not author negative rate question' do
-      before { post :rate, format: :json, params: { id: question_2, negative: true } }
-      it 'add rate for question in the database' do
-        expect(question_2.rating).to eq -1
-      end
-      it { expect(response).to have_http_status(:ok) }
-    end
-  end
-
-  describe 'PATCH #cancel_rate' do
-    let!(:question_2) { create(:question) }
-    let!(:rate) { create(:rate, ratable: question_2, user: @user) }
-    let!(:rate_2) { create(:rate, ratable: question) }
-    context 'author of rate cancel rate of question' do
-      before { post :cancel_rate, format: :json, params: { id: question_2 } }
-      it { expect(question_2.rating).to eq 0 }
-      it { expect(response).to have_http_status(:ok) }
-    end
-    context 'not author of rate cancel rate of question' do
-      before { post :cancel_rate, format: :json, params: { id: question } }
-      it { expect(question.rating).to eq 1 }
-      it { expect(response).to have_http_status(:forbidden) }
-    end
-
-  end
 
 end
