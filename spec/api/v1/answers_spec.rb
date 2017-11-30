@@ -26,18 +26,6 @@ describe 'Answers API' do
 
   describe 'GET /show' do
     it_behaves_like "API Authenticable"
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles/me', params: {format: :json}
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles/me', params: {format: :json, access_token: '1234'}
-        expect(response.status).to eq 401
-      end
-    end
-
     context 'authorized' do
       let(:access_token) { create(:access_token) }
       let(:question) { create(:question)}
@@ -71,18 +59,6 @@ describe 'Answers API' do
 
   describe 'POST /create' do
     it_behaves_like "API Authenticable"
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles/me', params: {format: :json}
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles/me', params: {format: :json, access_token: '1234'}
-        expect(response.status).to eq 401
-      end
-    end
-
     context 'authorized' do
       let(:access_token) { create(:access_token) }
       let(:question) { create(:question) }
