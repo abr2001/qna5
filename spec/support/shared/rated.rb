@@ -1,8 +1,7 @@
 shared_examples_for "Rated" do |model_name|
+  let(:ratable) { create(model_name.to_sym, user: @user) }
+  let(:foreign_ratable) { create(model_name.to_sym) }
   describe 'PATCH #cancel_rate' do
-    let(:ratable) { create(model_name.to_sym, user: @user) }
-    let!(:foreign_ratable) { create(model_name.to_sym) }
-
     context "author try rate #{model_name}" do
       before { post :rate, format: :json, params: { id: ratable } }
       it "not rate for #{model_name} in the database" do
@@ -27,8 +26,6 @@ shared_examples_for "Rated" do |model_name|
   end
 
   describe 'PATCH #cancel_rate' do
-    let(:ratable) { create(model_name.to_sym, user: @user) }
-    let!(:foreign_ratable) { create(model_name.to_sym) }
     let!(:rate) { create(:rate, ratable: foreign_ratable, user: @user) }
     let!(:foreign_rate) { create(:rate, ratable: ratable) }
     context "author of rate cancel rate of #{model_name}" do
@@ -41,6 +38,5 @@ shared_examples_for "Rated" do |model_name|
       it { expect(ratable.rating).to eq 1 }
       it { expect(response).to have_http_status(:forbidden) }
     end
-
   end
 end
