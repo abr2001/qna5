@@ -1,0 +1,5 @@
+= form_tag search_path, method: :get, class: 'navbar-form' do
+  .form-group
+    = text_field_tag :search_string, params[:search_string], required: true, class: "form-control"
+    = select_tag :search_object, options_for_select(Search::SEARCH_OBJECTS, params[:search_object]), class: "form-control", prompt: 'Everywhere'
+    = submit_tag 'Search', class: "btn btn-default"

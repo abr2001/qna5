@@ -1,10 +1,14 @@
 .row
   .action-question
     %p=question.user.email
-    - if can?(:destroy, @question)
-      = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
-    - if can?(:update, @question)
-      = link_to 'Edit', '', class: 'edit-question-link'
+    .col-md-2#subscription
+      = render 'subscriptions/subscription', question: question
+    .col-md-10
+      - if can?(:destroy, @question)
+        = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }
+      - if can?(:update, @question)
+        = link_to 'Edit', '', class: 'edit-question-link'
+
 
       = form_for @question, remote: true do |f|
         = f.label :title
@@ -14,8 +18,8 @@
         = f.text_area :body, class: "form-control"
 
         = f.submit 'Update', class: "btn btn-primary"
-
-    .rate-question= render 'shared/rate', item: @question
+.row
+  .rate-question= render 'shared/rate', item: @question
 
   %b= question.title
   %p= question.body.html_safe

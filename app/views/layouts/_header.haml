@@ -12,6 +12,8 @@
       %li
         %li
           = link_to 'New question', new_question_path
+      %li
+        = render 'search/search'
       - if user_signed_in?
         %p.navbar-text= current_user.email
         %li

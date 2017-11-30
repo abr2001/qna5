@@ -15,6 +15,7 @@ class Ability
   def guest_abilities
     can :read, :all
     cannot :manage, :profile
+    can :search, Search
   end
 
   def admin_abilities
@@ -29,12 +30,12 @@ class Ability
     can :cancel_rate, [Question, Answer] do |ratable|
       ratable.user_id != user.id
     end
-    can :create, [Question, Answer, Comment, Attachment]
+    can :create, [Question, Answer, Comment, Attachment, Subscription]
     can :update, [Question, Answer], user_id: user.id
     can :set_best, Answer do |answer|
       answer.question.user_id == user.id && !answer.best
     end
-    can :destroy, [Question, Answer, Comment], user_id: user.id
+    can :destroy, [Question, Answer, Comment, Subscription], user_id: user.id
     can :destroy, Attachment do |attachment|
       attachment.attachable.user_id == user.id
     end

@@ -13,7 +13,7 @@ feature 'add rate to question', %q{
   scenario 'The auhtor of question can not rate', js: true do
     login_user
     visit question_path(question.id)
-    within('.action-question') do
+    within('.rate-question') do
       expect(page).to_not have_link '+'
       expect(page).to_not have_link '-'
     end
@@ -27,7 +27,7 @@ feature 'add rate to question', %q{
       }
 
     scenario 'The user rate for the question', js: true do
-      within('.action-question') do
+      within('.rate-question') do
         click_on '+'
         within('.rating') do
           expect(page).to have_content '1'

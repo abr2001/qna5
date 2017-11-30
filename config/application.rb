@@ -5,6 +5,7 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+Dotenv::Railtie.load
 
 module Qna5
   class Application < Rails::Application
@@ -29,5 +30,6 @@ module Qna5
     end
 
     config.app_generators.scaffold_controller :responders_controller
+    config.active_job.queue_adapter = :sidekiq
   end
 end
