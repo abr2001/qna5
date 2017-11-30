@@ -7,6 +7,8 @@ RSpec.describe AnswersController, type: :controller do
   let!(:answer) { create(:answer, user: @user, question: question) }
   let!(:answer2) { create(:answer, :with_user, question: question) }
 
+  it_behaves_like 'Rated', 'answer'
+
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves the new answer in the database' do
