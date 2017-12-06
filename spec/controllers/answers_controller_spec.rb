@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-
   login_user
   let!(:question) { create(:question, user: @user) }
   let!(:answer) { create(:answer, user: @user, question: question) }
   let!(:answer2) { create(:answer, :with_user, question: question) }
+
+  it_behaves_like 'Rated', 'answer'
 
   describe 'POST #create' do
     context 'with valid attributes' do
