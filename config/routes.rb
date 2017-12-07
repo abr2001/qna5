@@ -1,4 +1,11 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
+  authenticate :user, lambda { |user| user.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   use_doorkeeper
   root to: 'questions#index'
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }

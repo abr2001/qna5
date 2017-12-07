@@ -1,0 +1,4 @@
+daily_digest_job:
+  cron: "0 0 * * *"
+  class: "DailyDigestJob"
+  queue: default

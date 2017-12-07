@@ -29,5 +29,6 @@ module Qna5
     end
 
     config.app_generators.scaffold_controller :responders_controller
+    config.active_job.queue_adapter = :sidekiq
   end
 end
