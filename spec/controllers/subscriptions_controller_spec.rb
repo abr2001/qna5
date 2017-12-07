@@ -51,7 +51,6 @@ RSpec.describe SubscriptionsController, type: :controller do
 
     context 'signed_in user cant unsubscribe for other_user' do
       let!(:subscription2) { create(:subscription, question: question, user: another_user)}
-      let(:params2) { { id: subscription2.id, format: :js} }
       before do
         @request.env['devise.mapping'] = Devise.mappings[another_user]
         sign_in another_user
