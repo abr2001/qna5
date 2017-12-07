@@ -1,7 +1,8 @@
 .row
   .action-question
     %p=question.user.email
-    = render 'subscriptions/subscription', question: question
+    .col-md-2#subscription
+      = render 'subscriptions/subscription', question: question
     .col-md-10
       - if can?(:destroy, @question)
         = link_to 'Delete question', @question, method: :delete, data: { confirm: 'Are you sure?' }

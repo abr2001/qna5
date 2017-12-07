@@ -3,5 +3,5 @@
     $('.errors').html('<%= j message %>')
   <% end %>
 <% else %>
-    $(".subscription").html('<%= j render 'subscriptions/subscription',question: @subscription.question %>')
+    $("#subscription").html('<%= j render 'subscriptions/subscription',question: @subscription.question %>')
 <% end %>
