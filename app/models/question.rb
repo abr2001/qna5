@@ -15,5 +15,13 @@ class Question < ApplicationRecord
     Subscription.create!(user: user, question: self)
   end
 
+  def subscribed_by?(user)
+    subscriptions.where(user: user).exists?
+  end
+
+  def find_subscription(user)
+    subscriptions.where(user: user).first
+  end
+
   scope :list, -> { includes(:user).all.order(id: :desc) }
 end

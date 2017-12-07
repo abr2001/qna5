@@ -1,0 +1,9 @@
+.col-md-2.subscription
+  -if can?(:create, Subscription.new) && !question.subscribed_by?(current_user)
+    = link_to 'Subscribe', subscriptions_path(subscription: {question_id: question.id}),
+    method: :post, remote: true, id: "subscribe"
+
+  -subscription = question.find_subscription(current_user)
+  -if can?(:destroy, subscription) && question.subscribed_by?(current_user)
+    = link_to 'Unsubscribe', subscription, method: :delete, remote: true,
+      id: "unsubscribe"
