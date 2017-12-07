@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :questions, dependent: :destroy
   has_many :rates, dependent: :destroy
   has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def rate_of(item)
     rate = item.rates.where(user_id: id).first
