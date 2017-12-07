@@ -9,6 +9,8 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validate :best_only_one
 
+  after_create :notify_subscribers
+
   def set_best
     Answer.transaction do
       Answer.where(question_id: question).where(best: true).update_all(best: false)
@@ -23,4 +25,9 @@ class Answer < ApplicationRecord
       errors.add(:base, 'Must be the best only one answer')
     end
   end
+
+  def notify_subscribers
+    NewAnswerJob.perform_later(self)
+  end
+
 end
