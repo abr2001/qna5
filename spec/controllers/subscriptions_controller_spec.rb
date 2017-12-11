@@ -50,11 +50,10 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context 'signed_in user cant unsubscribe for other_user' do
-      let!(:subscription2) { create(:subscription, question: question, user: another_user)}
       before do
         @request.env['devise.mapping'] = Devise.mappings[another_user]
         sign_in another_user
-        subscription2
+        subscription
       end
       it 'cant delete subscription' do
         expect { delete :destroy, params: params }.to_not change(Subscription, :count)

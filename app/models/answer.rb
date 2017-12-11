@@ -9,7 +9,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validate :best_only_one
 
-  after_create :notify_subscribers
+  after_commit :notify_subscribers
 
   def set_best
     Answer.transaction do
