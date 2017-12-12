@@ -11,7 +11,7 @@ class Question < ApplicationRecord
 
   after_create :subscribe_author
 
-  scope :last_day, -> { where("updated_at >= ? AND updated_at <= ?", DateTime.current.beginning_of_day, DateTime.current.end_of_day ) }
+  scope :last_day, ->  { where(created_at: 1.day.ago.all_day) }
 
   def subscribe_author
     Subscription.create!(user: user, question: self)
