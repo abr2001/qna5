@@ -1,0 +1,3 @@
+%h3= "#{@search_results.size} objects found:"
+-@search_results.each do |result|
+  .well= link_to result.class.to_s, result rescue result.to_s

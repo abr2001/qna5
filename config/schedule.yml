@@ -7,3 +7,8 @@ new_answer_job:
   cron: "0 0 * * *"
   class: "NewAnswerJob"
   queue: default
+
+sphinx_index_job:
+  cron: "*/30 * * * *"
+  class: "SphinxIndexJob"
+  queue: default
