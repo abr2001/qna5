@@ -56,7 +56,8 @@ gem 'oj_mimic_json'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 gem 'sinatra', '>= 1.3.0', require: nil
-
+gem 'thinking-sphinx'
+gem 'mysql2'
 
 group :test do
   gem 'rspec-rails'
