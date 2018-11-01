@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
-  Capybara.server = :puma
-  Capybara.server_host = "0.0.0.0"
-  Capybara.server_port = 5000
-  Capybara.default_wait_time = 5
 
   config.include FeatureMacros, type: :feature
 
@@ -32,8 +28,7 @@ RSpec.configure do |config|
 
 end
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :firefox)
 end
-Capybara.javascript_driver = :poltergeist
 

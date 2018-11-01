@@ -71,6 +71,9 @@ group :test do
   gem 'poltergeist'
   gem 'phantomjs', :require => 'phantomjs/poltergeist'
   gem 'action-cable-testing'
+  gem 'watir-rails'
+  gem 'watir-rspec'
+  gem 'geckodriver-helper'
 end
 
 group :development do
